@@ -1,7 +1,4 @@
-# CS385_REACT_PROJECT\
-
-
-# Patrick’s Idea for Project (Better name?) CS385\
+# CS385_REACT_PROJECT
 
 Project description: \
 Platform to connect students with ideas up with investors and experts for social enterprise projects.\
