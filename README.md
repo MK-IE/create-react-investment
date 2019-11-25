@@ -3,7 +3,7 @@
 Project description: 
 Platform to connect students with ideas up with investors and experts for social enterprise projects.\
 
-# Project structure and roles: \
+# Project structure and roles:
   
   
   
