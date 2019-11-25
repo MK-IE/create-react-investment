@@ -1,7 +1,7 @@
 # CS385_REACT_PROJECT
 
-Project description: 
-Platform to connect students with ideas up with investors and experts for social enterprise projects.\
+**Project description:**
+Platform to connect students with ideas up with investors and experts for social enterprise projects.
 
 # Project structure and roles:
   
@@ -28,7 +28,7 @@ Platform to connect students with ideas up with investors and experts for social
   **Functionality of each page:**
     •	Main page: Display Projects with array of JSON, Investors users and basic users can like the projects, Upload projects to back-end\
     •	Create Account page / Login page: Check user input before allowing to authenticate (regex)\
-    •	User Account page: Display name, Projects for each user \
+    •	User Account page: Display name, Projects for each user
 
 
 
