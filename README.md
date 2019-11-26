@@ -13,9 +13,9 @@ Platform to connect students with ideas up with investors and experts for social
     •	Main Page\
     •	User Account Page\
   **Work/Roles Completed by Each Member (Rough estimation of tasks)**\
-    •	Ethan : API + Cryptography + Backend\
-    •	Marcin : Design/Styling + Page Layout + Animations\
-    •	Patrick :  \
+    •	Ethan : Working on Login & Create Account Pages\
+    •	Marcin : Working on User Account Page\
+    •	Patrick : Main Page\
   **User Types:**\
     •	Investor\
     •	Basic User ( Logged in )\
