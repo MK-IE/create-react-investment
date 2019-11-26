@@ -1,0 +1,18 @@
+/*
+    list-icon: https://feathericons.com/?query=list
+
+*/
+body {
+    background: black;
+}
+.nav-bar {
+    color: black;
+}
+
+.user-projects {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: grey;
+    color: white;
+    height: 100px;
+}
