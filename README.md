@@ -14,8 +14,8 @@ Platform to connect students with ideas up with investors and experts for social
     •	User Account Page\
   **Work/Roles Completed by Each Member (Rough estimation of tasks)**\
     •	Ethan : Working on Login & Create Account Pages\
-    •	Marcin : Working on User Account Page\
-    •	Patrick : Main Page\
+    •	Marcin : Main Page\
+    •	Patrick : Working on User Account Page\
   **User Types:**\
     •	Investor\
     •	Basic User ( Logged in )\
