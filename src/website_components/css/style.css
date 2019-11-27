@@ -5,6 +5,7 @@
 */
 body {
   background: #0e1116;
+  height: 100%;
 }
 .nav-bar {
   color: black;
@@ -24,7 +25,12 @@ body {
   border-radius: 15px;
   padding-top: 20px;
   padding-bottom: 20px;
-  width: 800px;
+}
+
+.img-user-projects {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
 }
 
 .like-btn,
@@ -55,8 +61,6 @@ body {
   outline: 0;
 }
 
-.img-user-projects {
-  width: 200px;
-  height: 200px;
-  margin-bottom: 20px;
+.load-screen {
+  height: 100vh;
 }

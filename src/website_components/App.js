@@ -22,7 +22,6 @@ class App extends Component {
     this.setState({ loginA: true });
   }
   switchPages() {
-    console.log(this.state.createA);
     switch (true) {
       case this.state.createA:
         return <CreateAccount />;

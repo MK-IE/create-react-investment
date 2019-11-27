@@ -20,7 +20,11 @@ class ElementDisplay extends Component {
   render() {
     return (
       <div className="user-projects container card">
-        <img src={pImage} className="img-user-projects card-img-top"></img>
+        <img
+          src={pImage}
+          className="img-user-projects card-img-top"
+          alt="project image"
+        ></img>
         <div className="cardBody">
           <h6 className="card-title">This is the title</h6>
           <p className="card-text">
