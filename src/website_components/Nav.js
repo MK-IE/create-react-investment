@@ -17,7 +17,7 @@ class Nav extends Component {
   render() {
     const show = this.state.menu ? "show" : "";
     return (
-      <nav className="nav-bar navbar navbar-expand-lg bg-light">
+      <nav className="nav-bar navbar navbar-expand-lg">
         <span className="navbar-brand">CS385</span>
         <button
           className="navbar-toggler"
@@ -28,12 +28,18 @@ class Nav extends Component {
         </button>
         <div className={"collapse navbar-collapse " + show}>
           <div className="navbar-nav">
-            <a className="nav-item nav-link" href="#">
+            <button
+              className="btn btn-link nav-item"
+              onClick={this.props.cClick}
+            >
               CREATE ACCOUNT
-            </a>
-            <a className="nav-item nav-link" href="#">
+            </button>
+            <button
+              className="btn btn-link nav-item"
+              onClick={this.props.lClick}
+            >
               LOGIN
-            </a>
+            </button>
           </div>
         </div>
       </nav>

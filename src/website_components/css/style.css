@@ -1,18 +1,62 @@
 /*
-    list-icon: https://feathericons.com/?query=list
-
+    icons currently from google
+    image used in user-projects : 
+    https://www.pexels.com/photo/woman-using-computer-3184163/
 */
 body {
-    background: black;
+  background: #0e1116;
 }
 .nav-bar {
-    color: black;
+  color: black;
+  border-bottom: 2px solid salmon;
+}
+
+.nav-bar {
+  background: #f8f8ed;
 }
 
 .user-projects {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: grey;
-    color: white;
-    height: 100px;
+  background: rgba(170, 170, 170, 0.6);
+  border: 1px solid white;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 800px;
+}
+
+.like-btn,
+.dislike-btn {
+  color: white;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.like-btn:hover,
+.dislike-btn:hover {
+  cursor: pointer;
+}
+
+.like-btn:hover,
+.like-btn:focus {
+  color: #0be881;
+  border: 1px solid transparent;
+  background: transparent;
+  outline: 0;
+}
+
+.dislike-btn:hover,
+.dislike-btn:focus {
+  color: red;
+  border: 1px solid transparent;
+  background: transparent;
+  outline: 0;
+}
+
+.img-user-projects {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
 }
