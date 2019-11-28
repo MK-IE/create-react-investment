@@ -18,7 +18,7 @@ class Nav extends Component {
     const show = this.state.menu ? "show" : "";
     return (
       <nav className="nav-bar navbar navbar-expand-lg">
-        <span className="navbar-brand">CS385</span>
+        <span className="navbar-brand">CREATE-REACT-INVESTMENT</span>
         <button
           className="navbar-toggler"
           type="button"
