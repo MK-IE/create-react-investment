@@ -1,11 +1,9 @@
 import React from "react";
 import { Component } from "react";
-import pImage from "./img/user-project.jpg";
 import LoadingScreen from "./LoadingScreen";
-import ProfileInterface from "./ProfileInterface";
+import pImage from "./img/user-project.jpg";
 
-
-class ElementDisplay extends Component {
+class ProfileInterface extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,8 +11,6 @@ class ElementDisplay extends Component {
     };
     this.likeBtn = this.likeBtn.bind(this);
     this.dislikeBtn = this.dislikeBtn.bind(this);
-    this.enterProfileBtn = this.enterProfileBtn.bind(this);
-
   }
   likeBtn() {
     this.setState({ total: this.state.total + 1 });
@@ -22,18 +18,15 @@ class ElementDisplay extends Component {
   dislikeBtn() {
     this.setState({ total: this.state.total - 1 });
   }
-  enterProfileBtn(){
+  switchPages() {
     if (!this.state.load) {
-      return <LoadingScreen/>;
+      return <LoadingScreen />;
     }
-    return this.state.profileScreen;
+    return this.state.displayScreen;
   }
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ load: true });
-    }, 1000);
-  }
+  
   render() {
+	return <div className="App">{this.switchPages()}</div>;
     return (
       <div className="user-projects container card">
         <img
@@ -42,15 +35,19 @@ class ElementDisplay extends Component {
           alt="project image"
         ></img>
         <div className="cardBody">
-          <h6 className="card-title">This is the title</h6>
-          <p className="card-text">
-            THIS IS THE TEXT OF THE PROJECT THIS IS THE TEXT OF THE PROJECT THIS
-            S THE TEXT OF THE PROJECT THIS IS THE TEXT OF THE PROJECT THIS IS
-            THE TEXT OF THE PROJECT THIS IS THE TEXT OF THE PROJECT THIS IS THE
-            TEXT OF THE PROJECT THIS IS THE TEXT OF THE PROJECT THIS IS THE TEXT
-            OF THE PROJECT THIS IS THE TEXT OF THE PROJECT THIS IS THE TEXT OF
+          <h6 className="card-title">John Smiths Project</h6>
+          <h3 className="card-text">
+          Who knows what to do about Climate Change?
+          
+          I do 
+          </h3>
+          <p className="bg-info">
+          My plan is to build giant recycling robots with x-ray vision and 
+          chainsaw hands.
           </p>
-          <button onClick={this.enterProfileBtn}>Hello</button>
+          <p className="bg-primary">          
+          I need 100,000 dollars, an ice-cream van and some electronic engineers.
+          </p>
           <div className="btn-group-vertical float-right">
             <button className=" like-btn" onClick={this.likeBtn}>
               <i className="material-icons">keyboard_arrow_up</i>
@@ -66,4 +63,4 @@ class ElementDisplay extends Component {
   }
 }
 
-export default ElementDisplay;
+export default ProfileInterface;
