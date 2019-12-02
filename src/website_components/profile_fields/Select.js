@@ -8,7 +8,8 @@ const Select = (props) =>
 			<select
 				value={props.value}
 				onChange={props.handleChange}>
-				<option>{props.placeholder}</option>
+				required
+				<option selected disabled>{props.placeholder}</option>
 				{props.options.map(field => 
 				{ return(
 					<option
