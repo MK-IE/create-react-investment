@@ -26,30 +26,30 @@ class ElementDisplay extends Component {
     const showcasePreview = !this.state.expand
       ? this.props.projectDes.substring(0, 500)
       : this.props.projectDes;
-    const fullPage = !this.state.expand ? "container" : "container-fluid";
+    const fullPage = !this.state.expand ? "container" : "d-flex container";
     return (
       <div className={"user-projects card " + fullPage}>
-        <img src={pImage} className="img-user-projects card-img-top"></img>
+        <img src={pImage} className="img-fluid card-img-top"></img>
         <div className="cardBody">
-            <a className="hover" onClick={this.props.pClick}>
-              <i className="icon-size material-icons">account_circle</i>
-            </a>
-            <div className="card-title">
-              <i>{this.props.userName}</i>
-            </div>
-            <a className="hover" onClick={this.expandBtn}>
+          <div className="card-title">
+            <i>{this.props.userName}</i>
+          </div>
+          <a className="hover" onClick={this.expandBtn}>
             <h6 className="card-title">{this.props.projectTitle}</h6>
             <p className="card-text">{showcasePreview}</p>
-            </a>
-            <div className="btn-group-vertical float-right">
-              <button className=" like-btn" onClick={this.likeBtn}>
-                <i className="material-icons">keyboard_arrow_up</i>
-              </button>
-              <span className="container text-center">{this.state.total}</span>
-              <button className=" dislike-btn" onClick={this.dislikeBtn}>
-                <i className="material-icons">keyboard_arrow_down</i>
-              </button>
-            </div>
+          </a>
+          <div className="btn-group-vertical float-right">
+            <button className=" like-btn" onClick={this.likeBtn}>
+              <i className="material-icons">keyboard_arrow_up</i>
+            </button>
+            <span className="container text-center">{this.state.total}</span>
+            <button className=" dislike-btn" onClick={this.dislikeBtn}>
+              <i className="material-icons">keyboard_arrow_down</i>
+            </button>
+            <a className="hover" onClick={this.props.pClick}>
+            <i className="icon-size material-icons">account_circle</i>
+          </a>
+          </div>
         </div>
       </div>
     );
