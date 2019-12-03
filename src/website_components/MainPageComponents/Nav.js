@@ -17,7 +17,7 @@ class Nav extends Component {
   render() {
     const show = this.state.menu ? "show" : "";
     return (
-      <nav className="nav-bar navbar navbar-expand-lg">
+      <nav className="fixed-top nav-bar navbar navbar-expand-lg">
         <span className="navbar-brand">CREATE-REACT-INVESTMENT</span>
         <button
           className="navbar-toggler"
