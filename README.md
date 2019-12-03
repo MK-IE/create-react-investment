@@ -16,13 +16,12 @@ Platform to connect students with ideas up with investors and experts for social
     •	Ethan : Working on Login & Create Account Pages\
     •	Marcin : Main Page\
     •	Patrick : Working on User Account Page\
+    •	Anna : TBA\
   **User Types:**\
     •	Investor\
     •	Basic User ( Logged in )\
     •	Basic User ( Not Logged in )\
   **Technologies used:**\
-    •	Digital Ocean for Hosting and making an API\
-    •	Python for back-end\
     •	Bootstrap for responsive web-design\
     •	CSS\
   **Functionality of each page:**\
