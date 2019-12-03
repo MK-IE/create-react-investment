@@ -17,6 +17,10 @@ body {
   background: #f8f8ed;
 }
 
+.back-btn {
+  font-size: 40px;
+  color: red;
+}
 .user-projects {
   background: rgba(170, 170, 170, 0.6);
   border: 1px solid white;
@@ -42,24 +46,38 @@ body {
 }
 
 .like-btn:hover,
-.dislike-btn:hover {
+.dislike-btn:hover,
+.like-btn:focus,
+.dislike-btn:focus {
   cursor: pointer;
+  outline: 0;
 }
 
-.like-btn:hover,
-.like-btn:focus {
+.like-btn:hover {
   color: #0be881;
   border: 1px solid transparent;
   background: transparent;
   outline: 0;
 }
 
-.dislike-btn:hover,
-.dislike-btn:focus {
+.dislike-btn:hover {
   color: red;
   border: 1px solid transparent;
   background: transparent;
   outline: 0;
+}
+
+.icon-size {
+  font-size: 40px;
+}
+
+.hover {
+  cursor: pointer;
+}
+
+.full-page img{
+  width: 40%;
+  height: 40%;
 }
 
 .load-screen {
