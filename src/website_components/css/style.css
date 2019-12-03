@@ -2,19 +2,26 @@
     icons currently from google
     image used in user-projects : 
     https://www.pexels.com/photo/woman-using-computer-3184163/
+
+    white-theme : 
+    text_nav_or_critical - 333333
+    text - f8f8f8
+    background - dfdfdf
+    borders - 555555
+    nav-background eeeeee
 */
 body {
-  background: #0e1116;
+  background: #dfdfdf;
   height: 100%;
   color: white;
 }
 .nav-bar {
-  color: black;
-  border-bottom: 2px solid salmon;
+  color: #333333;
+  border-bottom: 1px solid #333333;
 }
 
 .nav-bar {
-  background: #f8f8ed;
+  background: #eeeeee;
 }
 
 .back-btn {
@@ -22,20 +29,13 @@ body {
   color: red;
 }
 .user-projects {
-  background: rgba(170, 170, 170, 0.6);
-  border: 1px solid white;
+  background: rgb(150, 150, 150);
   color: white;
+  border-radius: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
-  border-radius: 15px;
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-.img-user-projects {
-  width: 200px;
-  height: 200px;
-  margin-bottom: 20px;
 }
 
 .like-btn,
@@ -68,7 +68,14 @@ body {
 }
 
 .icon-size {
+  transition: color 1s;
+  color: white;
   font-size: 40px;
+}
+
+.icon-size:hover {
+  transition: color 1s;
+  color: #222222;
 }
 
 .hover {
