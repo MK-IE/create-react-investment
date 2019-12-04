@@ -1,31 +1,49 @@
 import React from "react";
 import { Component } from "react";
-import MainPage from "./MainPage";
 import "./css/style.css";
-import CreateProfile from "./CreateProfile";
-import LoginProfile from "./LoginProfile";
-import LoadingScreen from "./LoadingScreen";
+import MainPage from "./StructuredPages/MainPage";
+import CreateProfile from "./StructuredPages/CreateProfile";
+import LoginProfile from "./StructuredPages/LoginProfile";
+import LoadingScreen from "./StructuredPages/LoadingScreen";
+import UserPage from "./StructuredPages/UserPage";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.cClick = this.cClick.bind(this);
     this.lClick = this.lClick.bind(this);
+    this.pClick = this.pClick.bind(this);
+    this.bClick = this.bClick.bind(this);
     this.state = {
       load: false,
-      apiData: [],
-      match: "false",
-      userPassword: "",
-      displayScreen: <MainPage cClick={this.cClick} lClick={this.lClick} />
+      prevPage: <MainPage />,
+      displayScreen: (
+        <MainPage
+          cClick={this.cClick}
+          lClick={this.lClick}
+          pClick={this.pClick}
+        />
+      )
     };
   }
   cClick() {
+    this.callLoad();
     this.setState({ displayScreen: <CreateProfile /> });
-    this.setState({ load: false });
-    this.componentDidMount();
   }
   lClick() {
+    this.callLoad();
     this.setState({ displayScreen: <LoginProfile /> });
+  }
+  pClick() {
+    this.callLoad();
+    this.setState({ displayScreen: <UserPage /> });
+  }
+  bClick() {
+    this.callLoad();
+    this.setState({ displayScreen: this.state.prevPage });
+  }
+  callLoad() {
+    this.setState({ prevPage: this.state.displayScreen });
     this.setState({ load: false });
     this.componentDidMount();
   }
@@ -41,7 +59,25 @@ class App extends Component {
     return this.state.displayScreen;
   }
   render() {
-    return <div className="App">{this.switchPages()}</div>;
+    console.log(this.state.prevPage); 
+    const backButton =
+      this.state.displayScreen.type.name !== "MainPage" ? (
+        <div className="container fixed-bottom">
+          <a className="hover" onClick={this.bClick}>
+            <i className="material-icons fixed-bottom back-btn">
+              subdirectory_arrow_left
+            </i>
+          </a>
+        </div>
+      ) : (
+        ""
+      );
+    return (
+      <div className="App">
+        {backButton}
+        {this.switchPages()}
+      </div>
+    );
   }
 }
 
