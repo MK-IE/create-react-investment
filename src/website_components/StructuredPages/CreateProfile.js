@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Select from "../ProfileFields/Select";
 import Input from "../ProfileFields/Input";
 import Match from "../ProfileFields/Match";
+import users from './Users';
+
+const userArray = users;
 
 function SaveDataToLocalStorage(data) {
   var a = [];
@@ -14,6 +17,7 @@ function SaveDataToLocalStorage(data) {
   // Re-serialize the array back into a string and store it in localStorage
   localStorage.setItem("session", JSON.stringify(a));
 }
+
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -164,10 +168,16 @@ class CreateProfile extends Component {
       () => console.log(this.state.newProfile)
     );
     this.setState({ passwordConfirm: "" });
+    this.storeToJSON();
     console.log("Submitted!");
     localStorage.clear();
     //var storedNames = JSON.parse(localStorage.getItem(1));
     //console.log(JSON.parse(localStorage.getItem(1)));
+  }
+  
+  storeToJSON()
+  {
+	  users.splice(-0, 0, this.state.newProfile);
   }
 
   validateForm() {
@@ -261,6 +271,8 @@ class CreateProfile extends Component {
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
+  
+  
 
   componentDidUpdate() {
     console.log("update", this.state);
