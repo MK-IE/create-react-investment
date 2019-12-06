@@ -13,7 +13,7 @@
 body {
   background: #dfdfdf;
   height: 100%;
-  color: white;
+  color: #f8f8f8;
 }
 .nav-bar {
   color: #333333;
@@ -30,7 +30,7 @@ body {
 }
 .user-projects {
   background: rgb(150, 150, 150);
-  color: white;
+  color: #f8f8f8;
   border-radius: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
