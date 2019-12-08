@@ -47,8 +47,8 @@ class ElementDisplay extends Component {
               <i className="material-icons">keyboard_arrow_down</i>
             </button>
             <a className="hover" onClick={this.props.pClick}>
-            <i className="icon-size material-icons">account_circle</i>
-          </a>
+              <i className="icon-size material-icons">account_circle</i>
+            </a>
           </div>
         </div>
       </div>
