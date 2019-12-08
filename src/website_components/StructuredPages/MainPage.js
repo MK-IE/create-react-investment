@@ -14,10 +14,11 @@ class MainPage extends Component {
     const projects = this.nProjects.map(p => (
       <ElementDisplay
         key={p.toString()}
+       // var indexNo={passUser[p].i}
         userName={passUser[p].name}
         projectDes={passUser[p].des}
         projectTitle={passUser[p].title}
-        pClick={this.props.pClick}
+        pClick={this.props.pClick/*(passUser[p].i)*/}
       />
     ));
     return (

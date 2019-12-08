@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Select from "../ProfileFields/Select";
 import Input from "../ProfileFields/Input";
 import Match from "../ProfileFields/Match";
-import users from './Users';
+import users from "./Users";
 
 const userArray = users;
 
-function SaveDataToLocalStorage(data) {
+function SaveDataToLocalStorage(data)
+{
   var a = [];
   // Parse the serialized data back into an aray of objects
   a = JSON.parse(localStorage.getItem("session"));
@@ -18,9 +19,10 @@ function SaveDataToLocalStorage(data) {
   localStorage.setItem("session", JSON.stringify(a));
 }
 
-
-class CreateProfile extends Component {
-  constructor(props) {
+class CreateProfile extends Component
+{
+  constructor(props)
+  {
     super(props);
 
     this.state = {
@@ -68,7 +70,8 @@ class CreateProfile extends Component {
     this.validateForm = this.validateForm.bind(this);
   }
 
-  handleNameChange(event) {
+  handleNameChange(event)
+  {
     let value = event.target.value;
     this.setState(
       prevState => ({ newProfile: { ...prevState.newProfile, name: value } }),
@@ -77,7 +80,8 @@ class CreateProfile extends Component {
     this.validateName(value);
   }
 
-  handleEmailChange(event) {
+  handleEmailChange(event)
+  {
     let value = event.target.value;
     this.setState(
       prevState => ({ newProfile: { ...prevState.newProfile, email: value } }),
@@ -86,7 +90,8 @@ class CreateProfile extends Component {
     this.validateEmail(value);
   }
 
-  handleGenderChange(event) {
+  handleGenderChange(event)
+  {
     console.log(event.target.value);
     let value = event.target.value;
     let tempProfile = this.state.newProfile;
@@ -96,19 +101,23 @@ class CreateProfile extends Component {
     this.validateGenderSelection(value);
   }
 
-  handlePasswordChange(event) {
+  handlePasswordChange(event)
+  {
     let value = event.target.value;
 
     this.setState(
       prevState => ({
         newProfile: { ...prevState.newProfile, password: value }
       }),
-      () => {
-        if (this.state.newProfile.password !== this.state.passwordConfirm) {
+      () =>
+      {
+        if (this.state.newProfile.password !== this.state.passwordConfirm)
+        {
           this.setState({ match: false }, this.validateForm);
         } else if (
           this.state.newProfile.password === this.state.passwordConfirm
-        ) {
+        )
+        {
           this.setState({ match: true }, this.validateForm);
         }
         console.log(this.state.match);
@@ -119,14 +128,18 @@ class CreateProfile extends Component {
     this.validatePassword(value);
   }
 
-  handleSecondPasswordChange(event) {
+  handleSecondPasswordChange(event)
+  {
     let value = event.target.value;
-    this.setState({ passwordConfirm: value }, () => {
-      if (this.state.newProfile.password !== this.state.passwordConfirm) {
+    this.setState({ passwordConfirm: value }, () =>
+    {
+      if (this.state.newProfile.password !== this.state.passwordConfirm)
+      {
         this.setState({ match: false }, this.validateForm);
       } else if (
         this.state.newProfile.password === this.state.passwordConfirm
-      ) {
+      )
+      {
         this.setState({ match: true }, this.validateForm);
       }
       console.log(this.state.match);
@@ -134,7 +147,8 @@ class CreateProfile extends Component {
     });
   }
 
-  handleUserTypeChange(event) {
+  handleUserTypeChange(event)
+  {
     let type = event.target.value;
     this.setState(
       prevState => ({
@@ -145,8 +159,10 @@ class CreateProfile extends Component {
     this.validateUserTypeSelection();
   }
 
-  handleFormSubmission() {
-    if (this.state.first === true) {
+  handleFormSubmission()
+  {
+    if (this.state.first === true)
+    {
       var a = [];
       a.push(JSON.parse(localStorage.getItem("session")));
       localStorage.setItem("session", JSON.stringify(a));
@@ -174,13 +190,14 @@ class CreateProfile extends Component {
     //var storedNames = JSON.parse(localStorage.getItem(1));
     //console.log(JSON.parse(localStorage.getItem(1)));
   }
-  
+
   storeToJSON()
   {
-	  users.splice(-0, 0, this.state.newProfile);
+    users.splice(-0, 0, this.state.newProfile);
   }
 
-  validateForm() {
+  validateForm()
+  {
     if (
       this.state.nameValid === true &&
       this.state.emailValid === true &&
@@ -188,72 +205,88 @@ class CreateProfile extends Component {
       this.state.userTypeValid === true &&
       this.state.genderSelectionValid === true &&
       this.state.match === true
-    ) {
+    )
+    {
       this.setState({ formValid: true });
-    } else {
+    } else
+    {
       this.setState({ formValid: false });
     }
 
-    if (this.state.formValid === false) {
+    if (this.state.formValid === false)
+    {
       console.log(this.state.formErrors);
     }
   }
 
-  validateName(name) {
+  validateName(name)
+  {
     let localFormErrors = { ...this.state.formErrors };
 
-    if (name.length < 5) {
+    if (name.length < 5)
+    {
       localFormErrors.name = "The name is too short.";
       this.setState({ nameValid: false });
-    } else {
+    } else
+    {
       localFormErrors.name = "";
       this.setState({ nameValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validateEmail(email) {
+  validateEmail(email)
+  {
     //API validation occurs here
     let localFormErrors = { ...this.state.formErrors };
 
-    if (email.length < 4) {
+    if (email.length < 4)
+    {
       localFormErrors.email = "The email is too short.";
       this.setState({ emailValid: false });
-    } else {
+    } else
+    {
       localFormErrors.email = "";
       this.setState({ emailValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validateGenderSelection(gender) {
+  validateGenderSelection(gender)
+  {
     let localFormErrors = { ...this.state.formErrors };
 
-    if (gender == "Male" || "Female" || "Other") {
+    if (gender == "Male" || "Female" || "Other")
+    {
       localFormErrors.gender = "";
       this.setState({ genderSelectionValid: true });
-    } else if (gender == "Select Gender") {
+    } else if (gender == "Select Gender")
+    {
       localFormErrors.gender = "No gender selected.";
       this.setState({ genderSelectionValid: false });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validateUserTypeSelection() {
+  validateUserTypeSelection()
+  {
     let localFormErrors = { ...this.state.formErrors };
     let localSelection = this.state.newProfile.userType;
 
-    if (localSelection === "Student" || "Investor") {
+    if (localSelection === "Student" || "Investor")
+    {
       localFormErrors.userType = "";
       this.setState({ userTypeValid: true });
-    } else {
+    } else
+    {
       localFormErrors.userType = "No user type selected.";
       this.setState({ userTypeValid: false });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validatePassword(password) {
+  validatePassword(password)
+  {
     let localFormErrors = { ...this.state.formErrors };
     if (
       password.length < 7 ||
@@ -261,24 +294,26 @@ class CreateProfile extends Component {
       password.search(/[a-zA-Z]/) === -1 ||
       password.search(/\d/) === -1 ||
       password.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1
-    ) {
+    )
+    {
       localFormErrors.password =
         "Must be longer than seven characters, less than sixty four and contain letters and numbers.";
       this.setState({ passwordValid: false });
-    } else {
+    } else
+    {
       localFormErrors.password = "";
       this.setState({ passwordValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
-  
-  
 
-  componentDidUpdate() {
+  componentDidUpdate()
+  {
     console.log("update", this.state);
   }
 
-  render() {
+  render()
+  {
     return (
       <div className="Creation Form">
         <h3>Create Profile Here</h3>

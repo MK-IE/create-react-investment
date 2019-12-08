@@ -6,6 +6,9 @@ import CreateProfile from "./StructuredPages/CreateProfile";
 import LoginProfile from "./StructuredPages/LoginProfile";
 import LoadingScreen from "./StructuredPages/LoadingScreen";
 import UserPage from "./StructuredPages/UserPage";
+import ElementDisplay from "./MainPageComponents/ElementDisplay";
+import Users from "./StructuredPages/Users";
+
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +19,7 @@ class App extends Component {
     this.bClick = this.bClick.bind(this);
     this.state = {
       load: false,
+      pVal: 0,
       prevPage: <MainPage />,
       displayScreen: (
         <MainPage
@@ -34,9 +38,22 @@ class App extends Component {
     this.callLoad();
     this.setState({ displayScreen: <LoginProfile /> });
   }
-  pClick() {
+  pClick(i) {
     this.callLoad();
-    this.setState({ displayScreen: <UserPage /> });
+    this.setState({ pVal: i });
+    this.plClick();
+  }
+  plClick() {
+    this.callLoad();
+    const passUser = Users;
+    this.setState({
+      displayScreen: <ElementDisplay
+        key={this.state.pVal.toString()}
+        userName={passUser[this.state.pVal].name}
+        projectDes={passUser[this.state.pVal].des}
+        projectTitle={passUser[this.state.pVal].title}
+      />
+    });
   }
   bClick() {
     this.callLoad();
@@ -59,7 +76,7 @@ class App extends Component {
     return this.state.displayScreen;
   }
   render() {
-    console.log(this.state.prevPage); 
+    console.log(this.state.prevPage);
     const backButton =
       this.state.displayScreen.type.name !== "MainPage" ? (
         <div className="container fixed-bottom">
@@ -70,8 +87,8 @@ class App extends Component {
           </a>
         </div>
       ) : (
-        ""
-      );
+          ""
+        );
     return (
       <div className="App">
         {backButton}
