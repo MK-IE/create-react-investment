@@ -5,13 +5,14 @@ import MainPage from "./StructuredPages/MainPage";
 import CreateProfile from "./StructuredPages/CreateProfile";
 import LoginProfile from "./StructuredPages/LoginProfile";
 import LoadingScreen from "./StructuredPages/LoadingScreen";
-import UserPage from "./StructuredPages/UserPage";
 import ElementDisplay from "./MainPageComponents/ElementDisplay";
 import Users from "./StructuredPages/Users";
+import { writePostData } from "./ContactServer/ContactServer";
 
-
-class App extends Component {
-  constructor(props) {
+class App extends Component
+{
+  constructor(props)
+  {
     super(props);
     this.cClick = this.cClick.bind(this);
     this.lClick = this.lClick.bind(this);
@@ -30,52 +31,65 @@ class App extends Component {
       )
     };
   }
-  cClick() {
+  cClick()
+  {
     this.callLoad();
     this.setState({ displayScreen: <CreateProfile /> });
   }
-  lClick() {
+  lClick()
+  {
     this.callLoad();
     this.setState({ displayScreen: <LoginProfile /> });
   }
-  pClick(i) {
+  pClick(i)
+  {
     this.callLoad();
     this.setState({ pVal: i });
     this.plClick();
   }
-  plClick() {
+  plClick()
+  {
     this.callLoad();
     const passUser = Users;
     this.setState({
-      displayScreen: <ElementDisplay
-        key={this.state.pVal.toString()}
-        userName={passUser[this.state.pVal].name}
-        projectDes={passUser[this.state.pVal].des}
-        projectTitle={passUser[this.state.pVal].title}
-      />
+      displayScreen: (
+        <ElementDisplay
+          key={this.state.pVal.toString()}
+          userName={passUser[this.state.pVal].name}
+          projectDes={passUser[this.state.pVal].des}
+          projectTitle={passUser[this.state.pVal].title}
+        />
+      )
     });
   }
-  bClick() {
+  bClick()
+  {
     this.callLoad();
     this.setState({ displayScreen: this.state.prevPage });
   }
-  callLoad() {
+  callLoad()
+  {
     this.setState({ prevPage: this.state.displayScreen });
     this.setState({ load: false });
     this.componentDidMount();
   }
-  componentDidMount() {
-    setTimeout(() => {
+  componentDidMount()
+  {
+    setTimeout(() =>
+    {
       this.setState({ load: true });
     }, 1000);
   }
-  switchPages() {
-    if (!this.state.load) {
+  switchPages()
+  {
+    if (!this.state.load)
+    {
       return <LoadingScreen />;
     }
     return this.state.displayScreen;
   }
-  render() {
+  render()
+  {
     console.log(this.state.prevPage);
     const backButton =
       this.state.displayScreen.type.name !== "MainPage" ? (
