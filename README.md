@@ -16,7 +16,7 @@ Platform to connect students with ideas up with investors and experts for social
     •	Ethan : Working on Login & Create Account Pages\
     •	Marcin : Main Page\
     •	Patrick : Working on User Account Page\
-    •	Anna : TBA\
+    •	Anna : Project Upload Page\
   **User Types:**\
     •	Investor\
     •	Basic User ( Logged in )\
