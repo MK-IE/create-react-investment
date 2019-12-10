@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
+import { passwordVerify } from "../AuxilaryFunctions/Hash";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBdpf_wxtSI1tFtQCNNST1q-OXlfF6K0kU",
@@ -36,11 +37,13 @@ function readMaxKey() {
     });
 }
 
-export function writeUserData(userName, email, gender, passWord, userType) {
+export function writeUserData(userName, name, email, gender, password, userType, salt) {
     let user = {
-        email: email,
+		name: name,
+		email: email,
         gender: gender,
-        passWord: passWord,
+        password: password,
+        salt: salt,
         userType: userType
     };
 
@@ -48,14 +51,22 @@ export function writeUserData(userName, email, gender, passWord, userType) {
     return userAuth.Error;
 }
 
-export function readUserData(userName, passWord) {
-
-    firebase.database().ref("users/" + userName).once("value").then(function (snap) {
-        return snap.exists() && snap.val().passWord === passWord ? userAuth.located = snap.val()
-            : userAuth.located = false;
-    });
-    return userAuth.located;
+export function readUserData(userName, password) {
+	try
+	{
+		firebase.database().ref('users/' + userName).once('value').then(function (snap)
+		{
+			var verification = passwordVerify(password, snap.val().salt);			
+			snap.exists() && snap.val().password === verification ? userAuth.located = snap.val(): userAuth.located = false;
+		});
+		return userAuth.located;
+	}
+	catch(err)
+	{
+		return false;
+	}
 }
+
 
 export function writePostData(title, body, userName) {
     readMaxKey();
@@ -84,3 +95,26 @@ export function readPostData(postKey) {
     });
     return userAuth.post;
 }
+
+export function checkDataBase(userName)
+{
+	firebase.database().ref.child("users").orderByChild("ID").equalTo("U1EL5623").once("value",snapshot => {
+    if (snapshot.exists()){
+      const userData = snapshot.val();
+      console.log("exists!", userData);
+    }
+});
+}
+
+function generatePassword(password, salt)
+{
+	let verification = passwordVerify(password, salt);
+	return verification;
+}
+
+async function asyncDidMount()
+{
+	
+}
+	
+

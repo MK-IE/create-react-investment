@@ -3,21 +3,10 @@ import Select from "../ProfileFields/Select";
 import Input from "../ProfileFields/Input";
 import Match from "../ProfileFields/Match";
 import users from "./Users";
-
+import { writeUserData } from "../ContactServer/ContactServer";
+import { readUserData } from "../ContactServer/ContactServer";
+import { passwordHash } from "../AuxilaryFunctions/Hash";
 const userArray = users;
-
-function SaveDataToLocalStorage(data)
-{
-  var a = [];
-  // Parse the serialized data back into an aray of objects
-  a = JSON.parse(localStorage.getItem("session"));
-  // Push the new data (whether it be an object or anything else) onto the array
-  a.push(data);
-  // Alert the array value
-  //alert(a);  // Should be something like [Object array]
-  // Re-serialize the array back into a string and store it in localStorage
-  localStorage.setItem("session", JSON.stringify(a));
-}
 
 class CreateProfile extends Component
 {
@@ -27,6 +16,7 @@ class CreateProfile extends Component
 
     this.state = {
       newProfile: {
+		userName: "",
         name: "",
         email: "",
         gender: "",
@@ -41,9 +31,11 @@ class CreateProfile extends Component
       genderSelectionValid: false,
       userTypeValid: false,
       passwordValid: false,
+      userNameValid: false,
 
       formErrors: {
         name: "",
+        userName: "",
         email: "",
         password: "",
         gender: "",
@@ -59,11 +51,10 @@ class CreateProfile extends Component
     };
     this.handleGenderChange = this.handleGenderChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(
-      this
-    );
+    this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(this);
     this.handleUserTypeChange = this.handleUserTypeChange.bind(this);
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
     this.validateName = this.validateName.bind(this);
@@ -78,6 +69,16 @@ class CreateProfile extends Component
       () => console.log(this.state.newProfile)
     );
     this.validateName(value);
+  }
+  
+  handleUserNameChange(event)
+  {
+	  let value = event.target.value;
+	  this.setState(
+		prevState => ({ newProfile: {...prevState.newProfile, userName: value} }),
+		() => console.log(this.state.newProfile)
+	);
+	this.validateUserName(value);
   }
 
   handleEmailChange(event)
@@ -159,17 +160,13 @@ class CreateProfile extends Component
     this.validateUserTypeSelection();
   }
 
-  handleFormSubmission()
+  handleFormSubmission(event)
   {
-    if (this.state.first === true)
-    {
-      var a = [];
-      a.push(JSON.parse(localStorage.getItem("session")));
-      localStorage.setItem("session", JSON.stringify(a));
-      this.setState({ first: false });
-    }
-    SaveDataToLocalStorage(this.state.newProfile);
-    //localStorage.setItem(1, JSON.stringify(this.state.newProfile));
+    event.preventDefault();
+    let hashedPassword = passwordHash(this.state.newProfile.password);
+    let hash = hashedPassword[0];
+    let salt = hashedPassword[1];
+    writeUserData(this.state.newProfile.userName, this.state.newProfile.name, this.state.newProfile.email, this.state.newProfile.gender, hash, this.state.newProfile.userType, salt);
     this.setState(
       prevState => ({
         newProfile: {
@@ -184,21 +181,13 @@ class CreateProfile extends Component
       () => console.log(this.state.newProfile)
     );
     this.setState({ passwordConfirm: "" });
-    this.storeToJSON();
     console.log("Submitted!");
-    localStorage.clear();
-    //var storedNames = JSON.parse(localStorage.getItem(1));
-    //console.log(JSON.parse(localStorage.getItem(1)));
-  }
-
-  storeToJSON()
-  {
-    users.splice(-0, 0, this.state.newProfile);
   }
 
   validateForm()
   {
     if (
+	  this.state.userNameValid === true &&
       this.state.nameValid === true &&
       this.state.emailValid === true &&
       this.state.passwordValid === true &&
@@ -233,6 +222,23 @@ class CreateProfile extends Component
       this.setState({ nameValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
+  }
+  
+  validateUserName(userName)
+  {
+	let localFormErrors = { ...this.state.formErrors };
+
+    if (userName.length < 5)
+    {
+      localFormErrors.name = "The name is too short.";
+      this.setState({ userNameValid: false });
+    } else
+    {
+      localFormErrors.name = "";
+      this.setState({ userNameValid: true });
+    }
+    this.setState({ formErrors: localFormErrors }, this.validateForm);
+	  
   }
 
   validateEmail(email)
@@ -307,17 +313,18 @@ class CreateProfile extends Component
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  componentDidUpdate()
-  {
-    console.log("update", this.state);
-  }
-
   render()
   {
     return (
       <div className="Creation Form">
         <h3>Create Profile Here</h3>
         <form>
+          <Input
+            placeholder={"Enter Profile Name"}
+            handleChange={this.handleUserNameChange}
+            title={"ProfileName"}
+            required
+          />
           <Input
             placeholder={"Enter Name"}
             handleChange={this.handleNameChange}
@@ -352,13 +359,15 @@ class CreateProfile extends Component
             title={"Re-enter Password"}
           />
           <Match match={this.state.match} />
-          <button
+         <a><button
+			className = "button"
+			btn btn-link hover
             disabled={!this.state.formValid}
             name={"Submit Info!"}
             onClick={this.handleFormSubmission}
           >
             Submit!
-          </button>
+          </button></a>
         </form>
       </div>
     );
