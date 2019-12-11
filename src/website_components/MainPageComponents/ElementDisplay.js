@@ -52,6 +52,9 @@ class ElementDisplay extends Component {
           </div>
         </div>
       </div>
+          /*if(this.props.state.pVal != -1){
+			 <h6>{this.props.projectLink}</h6>
+		  }*/
     );
   }
 }

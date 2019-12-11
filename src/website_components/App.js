@@ -6,7 +6,6 @@ import CreateProfile from "./StructuredPages/CreateProfile";
 import LoginProfile from "./StructuredPages/LoginProfile";
 import LoadingScreen from "./StructuredPages/LoadingScreen";
 import UserPage from "./StructuredPages/UserPage";
-import ElementDisplay from "./MainPageComponents/ElementDisplay";
 import Users from "./StructuredPages/Users";
 
 class App extends Component {
@@ -14,17 +13,17 @@ class App extends Component {
     super(props);
     this.cClick = this.cClick.bind(this);
     this.lClick = this.lClick.bind(this);
-    this.pClick = this.pClick.bind(this);
     this.bClick = this.bClick.bind(this);
     this.state = {
       load: false,
-      pVal:0,
       prevPage: <MainPage />,
       displayScreen: (
         <MainPage
           cClick={this.cClick}
           lClick={this.lClick}
           pClick={this.pClick}
+          projectBase={Users}
+          passThis={this}
         />
       )
     };
@@ -37,20 +36,14 @@ class App extends Component {
     this.callLoad();
     this.setState({ displayScreen: <LoginProfile /> });
   }
-  pClick(i) {
+  pClick(userName) {
     this.callLoad();
-    this.setState({pVal: i});
-    this.plClick();
-  }
-  plClick(){
-	this.callLoad();
-	const passUser=Users;
-	this.setState({displayScreen: <ElementDisplay
-        key={this.state.pVal.toString()}
-        userName={passUser[this.state.pVal].name}
-        projectDes={passUser[this.state.pVal].des}
-        projectTitle={passUser[this.state.pVal].title}
-      />});
+    const userProjects = Users.filter(function(o) {
+      return o.name === userName;
+    });
+    this.setState({
+      displayScreen: <UserPage uName={userName} projectBase={userProjects} />
+    });
   }
   bClick() {
     this.callLoad();
@@ -73,7 +66,6 @@ class App extends Component {
     return this.state.displayScreen;
   }
   render() {
-    console.log(this.state.prevPage); 
     const backButton =
       this.state.displayScreen.type.name !== "MainPage" ? (
         <div className="container fixed-bottom">
