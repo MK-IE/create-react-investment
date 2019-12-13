@@ -7,6 +7,7 @@ const Input = props => {
       <label> {props.title} </label>
       <input
         title={props.title}
+        className="form-control"
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.handleChange}

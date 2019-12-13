@@ -3,7 +3,7 @@ import React from 'react';
 const Submit = (props) =>
 {
 	return (
-		<div className='form-submit'>
+		<div className="form-submit">
 			<button
 				disabled = {props.formValid}
 				type = {props.buttonType}

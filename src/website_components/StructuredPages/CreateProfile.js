@@ -8,15 +8,13 @@ import { readUserData } from "../ContactServer/ContactServer";
 import { passwordHash } from "../AuxilaryFunctions/Hash";
 const userArray = users;
 
-class CreateProfile extends Component
-{
-  constructor(props)
-  {
+class CreateProfile extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
       newProfile: {
-		userName: "",
+        userName: "",
         name: "",
         email: "",
         gender: "",
@@ -54,15 +52,16 @@ class CreateProfile extends Component
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(this);
+    this.handleSecondPasswordChange = this.handleSecondPasswordChange.bind(
+      this
+    );
     this.handleUserTypeChange = this.handleUserTypeChange.bind(this);
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
     this.validateName = this.validateName.bind(this);
     this.validateForm = this.validateForm.bind(this);
   }
 
-  handleNameChange(event)
-  {
+  handleNameChange(event) {
     let value = event.target.value;
     this.setState(
       prevState => ({ newProfile: { ...prevState.newProfile, name: value } }),
@@ -70,19 +69,19 @@ class CreateProfile extends Component
     );
     this.validateName(value);
   }
-  
-  handleUserNameChange(event)
-  {
-	  let value = event.target.value;
-	  this.setState(
-		prevState => ({ newProfile: {...prevState.newProfile, userName: value} }),
-		() => console.log(this.state.newProfile)
-	);
-	this.validateUserName(value);
+
+  handleUserNameChange(event) {
+    let value = event.target.value;
+    this.setState(
+      prevState => ({
+        newProfile: { ...prevState.newProfile, userName: value }
+      }),
+      () => console.log(this.state.newProfile)
+    );
+    this.validateUserName(value);
   }
 
-  handleEmailChange(event)
-  {
+  handleEmailChange(event) {
     let value = event.target.value;
     this.setState(
       prevState => ({ newProfile: { ...prevState.newProfile, email: value } }),
@@ -91,8 +90,7 @@ class CreateProfile extends Component
     this.validateEmail(value);
   }
 
-  handleGenderChange(event)
-  {
+  handleGenderChange(event) {
     console.log(event.target.value);
     let value = event.target.value;
     let tempProfile = this.state.newProfile;
@@ -102,23 +100,19 @@ class CreateProfile extends Component
     this.validateGenderSelection(value);
   }
 
-  handlePasswordChange(event)
-  {
+  handlePasswordChange(event) {
     let value = event.target.value;
 
     this.setState(
       prevState => ({
         newProfile: { ...prevState.newProfile, password: value }
       }),
-      () =>
-      {
-        if (this.state.newProfile.password !== this.state.passwordConfirm)
-        {
+      () => {
+        if (this.state.newProfile.password !== this.state.passwordConfirm) {
           this.setState({ match: false }, this.validateForm);
         } else if (
           this.state.newProfile.password === this.state.passwordConfirm
-        )
-        {
+        ) {
           this.setState({ match: true }, this.validateForm);
         }
         console.log(this.state.match);
@@ -129,18 +123,14 @@ class CreateProfile extends Component
     this.validatePassword(value);
   }
 
-  handleSecondPasswordChange(event)
-  {
+  handleSecondPasswordChange(event) {
     let value = event.target.value;
-    this.setState({ passwordConfirm: value }, () =>
-    {
-      if (this.state.newProfile.password !== this.state.passwordConfirm)
-      {
+    this.setState({ passwordConfirm: value }, () => {
+      if (this.state.newProfile.password !== this.state.passwordConfirm) {
         this.setState({ match: false }, this.validateForm);
       } else if (
         this.state.newProfile.password === this.state.passwordConfirm
-      )
-      {
+      ) {
         this.setState({ match: true }, this.validateForm);
       }
       console.log(this.state.match);
@@ -148,8 +138,7 @@ class CreateProfile extends Component
     });
   }
 
-  handleUserTypeChange(event)
-  {
+  handleUserTypeChange(event) {
     let type = event.target.value;
     this.setState(
       prevState => ({
@@ -160,13 +149,20 @@ class CreateProfile extends Component
     this.validateUserTypeSelection();
   }
 
-  handleFormSubmission(event)
-  {
+  handleFormSubmission(event) {
     event.preventDefault();
     let hashedPassword = passwordHash(this.state.newProfile.password);
     let hash = hashedPassword[0];
     let salt = hashedPassword[1];
-    writeUserData(this.state.newProfile.userName, this.state.newProfile.name, this.state.newProfile.email, this.state.newProfile.gender, hash, this.state.newProfile.userType, salt);
+    writeUserData(
+      this.state.newProfile.userName,
+      this.state.newProfile.name,
+      this.state.newProfile.email,
+      this.state.newProfile.gender,
+      hash,
+      this.state.newProfile.userType,
+      salt
+    );
     this.setState(
       prevState => ({
         newProfile: {
@@ -184,115 +180,94 @@ class CreateProfile extends Component
     console.log("Submitted!");
   }
 
-  validateForm()
-  {
+  validateForm() {
     if (
-	  this.state.userNameValid === true &&
+      this.state.userNameValid === true &&
       this.state.nameValid === true &&
       this.state.emailValid === true &&
       this.state.passwordValid === true &&
       this.state.userTypeValid === true &&
       this.state.genderSelectionValid === true &&
       this.state.match === true
-    )
-    {
+    ) {
       this.setState({ formValid: true });
-    } else
-    {
+    } else {
       this.setState({ formValid: false });
     }
 
-    if (this.state.formValid === false)
-    {
+    if (this.state.formValid === false) {
       console.log(this.state.formErrors);
     }
   }
 
-  validateName(name)
-  {
+  validateName(name) {
     let localFormErrors = { ...this.state.formErrors };
 
-    if (name.length < 5)
-    {
+    if (name.length < 5) {
       localFormErrors.name = "The name is too short.";
       this.setState({ nameValid: false });
-    } else
-    {
+    } else {
       localFormErrors.name = "";
       this.setState({ nameValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
-  
-  validateUserName(userName)
-  {
-	let localFormErrors = { ...this.state.formErrors };
 
-    if (userName.length < 5)
-    {
+  validateUserName(userName) {
+    let localFormErrors = { ...this.state.formErrors };
+
+    if (userName.length < 5) {
       localFormErrors.name = "The name is too short.";
       this.setState({ userNameValid: false });
-    } else
-    {
+    } else {
       localFormErrors.name = "";
       this.setState({ userNameValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
-	  
   }
 
-  validateEmail(email)
-  {
+  validateEmail(email) {
     //API validation occurs here
     let localFormErrors = { ...this.state.formErrors };
 
-    if (email.length < 4)
-    {
+    if (email.length < 4) {
       localFormErrors.email = "The email is too short.";
       this.setState({ emailValid: false });
-    } else
-    {
+    } else {
       localFormErrors.email = "";
       this.setState({ emailValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validateGenderSelection(gender)
-  {
+  validateGenderSelection(gender) {
     let localFormErrors = { ...this.state.formErrors };
 
-    if (gender == "Male" || "Female" || "Other")
-    {
+    if (gender == "Male" || "Female" || "Other") {
       localFormErrors.gender = "";
       this.setState({ genderSelectionValid: true });
-    } else if (gender == "Select Gender")
-    {
+    } else if (gender == "Select Gender") {
       localFormErrors.gender = "No gender selected.";
       this.setState({ genderSelectionValid: false });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validateUserTypeSelection()
-  {
+  validateUserTypeSelection() {
     let localFormErrors = { ...this.state.formErrors };
     let localSelection = this.state.newProfile.userType;
 
-    if (localSelection === "Student" || "Investor")
-    {
+    if (localSelection === "Student" || "Investor") {
       localFormErrors.userType = "";
       this.setState({ userTypeValid: true });
-    } else
-    {
+    } else {
       localFormErrors.userType = "No user type selected.";
       this.setState({ userTypeValid: false });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  validatePassword(password)
-  {
+  validatePassword(password) {
     let localFormErrors = { ...this.state.formErrors };
     if (
       password.length < 7 ||
@@ -300,75 +275,104 @@ class CreateProfile extends Component
       password.search(/[a-zA-Z]/) === -1 ||
       password.search(/\d/) === -1 ||
       password.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1
-    )
-    {
+    ) {
       localFormErrors.password =
         "Must be longer than seven characters, less than sixty four and contain letters and numbers.";
       this.setState({ passwordValid: false });
-    } else
-    {
+    } else {
       localFormErrors.password = "";
       this.setState({ passwordValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
   }
 
-  render()
-  {
+  render() {
     return (
-      <div className="Creation Form">
-        <h3>Create Profile Here</h3>
-        <form>
-          <Input
-            placeholder={"Enter Profile Name"}
-            handleChange={this.handleUserNameChange}
-            title={"ProfileName"}
-            required
-          />
-          <Input
-            placeholder={"Enter Name"}
-            handleChange={this.handleNameChange}
-            title={"Name"}
-            required
-          />
-          <Input
-            placeholder={"Enter E-mail"}
-            handleChange={this.handleEmailChange}
-            title={"E-mail"}
-          />
-          <Select
-            options={this.state.genderOptions}
-            placeholder={"Select Gender"}
-            handleChange={this.handleGenderChange}
-            title={"Gender"}
-          />
-          <Select
-            options={this.state.profileOptions}
-            placeholder={"Select User Type"}
-            handleChange={this.handleUserTypeChange}
-            title={"User Type"}
-          />
-          <Input
-            placeholder={"Enter password"}
-            handleChange={this.handlePasswordChange}
-            title={"Password"}
-          />
-          <Input
-            placeholder={"Enter password again"}
-            handleChange={this.handleSecondPasswordChange}
-            title={"Re-enter Password"}
-          />
-          <Match match={this.state.match} />
-         <a><button
-			className = "button"
-			btn btn-link hover
-            disabled={!this.state.formValid}
-            name={"Submit Info!"}
-            onClick={this.handleFormSubmission}
-          >
-            Submit!
-          </button></a>
-        </form>
+      <div className="create-profile">
+        <div className="container">
+          <h3 className="text-center">CREATE ACCOUNT</h3>
+        </div>
+        <div className="d-flex full-height align-items-center justify-content-center">
+          <div className="form-struct">
+            <form>
+              <div className="form-row">
+                <div className="col-sm">
+                  <Input
+                    placeholder={"Enter Profile Name"}
+                    handleChange={this.handleUserNameChange}
+                    title={"Profile Name"}
+                    required
+                  />
+                </div>
+                <div className="col-sm">
+                  <Input
+                    placeholder={"Enter Name"}
+                    handleChange={this.handleNameChange}
+                    title={"Name"}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="col-sm">
+                  <Input
+                    placeholder={"Enter E-mail"}
+                    handleChange={this.handleEmailChange}
+                    title={"E-mail"}
+                  />
+                </div>
+                <div className="col-sm">
+                  <Select
+                    options={this.state.genderOptions}
+                    placeholder={"Select Gender"}
+                    handleChange={this.handleGenderChange}
+                    title={"Gender"}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="col-sm">
+                  <Select
+                    options={this.state.profileOptions}
+                    placeholder={"Select User Type"}
+                    handleChange={this.handleUserTypeChange}
+                    title={"User Type"}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="col-sm">
+                  <Input
+                    placeholder={"Enter password"}
+                    handleChange={this.handlePasswordChange}
+                    title={"Password"}
+                  />
+                </div>
+                <div className="col-sm">
+                  <Input
+                    placeholder={"Enter password again"}
+                    handleChange={this.handleSecondPasswordChange}
+                    title={"Re-enter Password"}
+                  />
+                </div>
+              </div>
+              <div className="match-struct">
+                <Match match={this.state.match} />
+              </div>
+              <button
+                className="btn btn-primary"
+                btn
+                btn-link
+                hover
+                disabled={!this.state.formValid}
+                name={"Submit Info!"}
+                onClick={this.handleFormSubmission}
+              >
+                Submit!
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

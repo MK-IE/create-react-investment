@@ -6,10 +6,8 @@ import Match from "../ProfileFields/Match";
 import { readUserData } from "../ContactServer/ContactServer";
 import { passwordHash } from "../AuxilaryFunctions/Hash";
 
-class Login extends Component
-{
-  constructor(props)
-  {
+class Login extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       password: "",
@@ -31,41 +29,33 @@ class Login extends Component
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
   }
 
-  handleNameChange(event)
-  {
+  handleNameChange(event) {
     let value = event.target.value;
     this.setState({ userName: value });
   }
 
-  handlePasswordChange(event)
-  {
+  handlePasswordChange(event) {
     let value = event.target.value;
-    this.setState({ password: value }, () =>
-    {
+    this.setState({ password: value }, () => {
       console.log(this.state.password);
     });
   }
 
-  handleFormSubmission(event)
-  {
+  handleFormSubmission(event) {
     event.preventDefault();
     this.getUser();
   }
 
-  async getUser()
-  {
-    try
-    {
+  async getUser() {
+    try {
       let userProfile = await readUserData(
         this.state.userName,
         this.state.password
       );
       console.log(userProfile);
-      if (userProfile === false)
-      {
+      if (userProfile === false) {
         console.log("Incorrect username or password");
-      } else
-      {
+      } else {
         let localUserData = { ...this.state.userData };
         localUserData.userName = this.state.userName;
         localUserData.name = userProfile.name;
@@ -78,41 +68,48 @@ class Login extends Component
         );
         //If this worked, we want to send them somewhere
       }
-    } catch (err)
-    {
+    } catch (err) {
       console.log("Here is the error: " + err);
     }
   }
 
-  render()
-  {
+  render() {
     return (
-      <div>
-        <form>
-          <Input
-            placeholder={"Enter Name"}
-            handleChange={this.handleNameChange}
-            title={"Name"}
-            required
-          />
-          <Input
-            placeholder={"Enter password"}
-            handleChange={this.handlePasswordChange}
-            title={"Password"}
-          />
-          <a>
-            <button
-              className="button"
-              btn
-              btn-link
-              hover
-              disabled={!this.state.formValid}
-              onClick={this.handleFormSubmission}
-            >
-              Log In!
-            </button>
-          </a>
-        </form>
+      <div className="login-profile">
+        <div className="container">
+          <h3 className="text-center">LOGIN ACCOUNT</h3>
+        </div>
+        <div className="d-flex full-height align-items-center justify-content-center">
+          <div className="form-struct">
+            <form>
+              <div className="form-row">
+                <Input
+                  placeholder={"Enter Name"}
+                  handleChange={this.handleNameChange}
+                  title={"Username"}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <Input
+                  placeholder={"Enter password"}
+                  handleChange={this.handlePasswordChange}
+                  title={"Password"}
+                />
+              </div>
+              <button
+                className="btn btn-primary"
+                btn
+                btn-link
+                hover
+                disabled={!this.state.formValid}
+                onClick={this.handleFormSubmission}
+              >
+                Log In!
+              </button>
+            </form>
+          </div>
+        </div>
         {this.user}
       </div>
     );
