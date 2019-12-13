@@ -15,16 +15,19 @@ class UserPage extends Component {
         userName={passUser[p].name}
         projectDes={passUser[p].des}
         projectTitle={passUser[p].title}
-        pClick={null}
+        pClick={"none"}
       />
     ));
+    const userTitle = (this.props.uName + " Projects").toUpperCase();
     return (
       <div className="user-page">
-        <h1>{this.props.uName} Projects</h1>
+        <div className = "container text-center user-projects">
+          <h3>{userTitle}</h3>
+        </div>
         {projects}     
       </div>
     );
   }
 }
 
-export default UserPage;
+export default UserPage;  

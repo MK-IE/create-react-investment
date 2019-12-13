@@ -2,6 +2,10 @@
     icons currently from google
     image used in user-projects : 
     https://www.pexels.com/photo/woman-using-computer-3184163/
+    logo icon used :
+
+    https://www.flaticon.com/free-icon/heart-shaped-wolf-face_32845?term=wolf&page=1&position=28
+
 
     white-theme : 
     text_nav_or_critical - 333333
@@ -11,17 +15,17 @@
     nav-background eeeeee
 */
 body {
-  background: #dfdfdf;
-  height: 100%;
+  background: #2c3e50;
   color: #f8f8f8;
-}
-.nav-bar {
-  color: #333333;
-  border-bottom: 1px solid #333333;
 }
 
 .nav-bar {
-  background: #eeeeee;
+  color: #333333;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.nav-bar {
+  background: #ecf0f1;
 }
 
 .back-btn {
@@ -29,11 +33,11 @@ body {
   color: red;
 }
 .user-projects {
-  background: rgb(150, 150, 150);
+  background: #535c68;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
   color: #f8f8f8;
-  border-radius: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 40px;
+  margin-bottom: 0px;
   padding-top: 20px;
   padding-bottom: 20px;
 }

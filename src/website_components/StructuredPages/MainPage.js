@@ -16,11 +16,11 @@ class MainPage extends Component {
         userName={passUser[p].name}
         projectDes={passUser[p].des}
         projectTitle={passUser[p].title}
-        pClick={this.props.pClick.bind(this.props.passThis,passUser[p].name)}
+        pClick={this.props.pClick.bind(this.props.passThis, passUser[p].name)}
       />
     ));
     return (
-      <div>
+      <div className="main-page">
         <Nav cClick={this.props.cClick} lClick={this.props.lClick}></Nav>
         {projects}
       </div>
