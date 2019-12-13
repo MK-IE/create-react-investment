@@ -2,27 +2,25 @@ import React from "react";
 import { Component } from "react";
 import Nav from "../MainPageComponents/Nav";
 import ElementDisplay from "../MainPageComponents/ElementDisplay";
-import Users from "./Users";
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.nProjects = [...Array(Users.length).keys()]; //Get our keys for each react element..
+    this.nProjects = [...Array(this.props.projectBase.length).keys()]; //Get our keys for each react element..
   }
   render() {
     //Dummy element displays
-    const passUser = Users;
+    const passUser = this.props.projectBase;
     const projects = this.nProjects.map(p => (
       <ElementDisplay
         key={p.toString()}
-       // var indexNo={passUser[p].i}
         userName={passUser[p].name}
         projectDes={passUser[p].des}
         projectTitle={passUser[p].title}
-        pClick={this.props.pClick/*(passUser[p].i)*/}
+        pClick={this.props.pClick.bind(this.props.passThis, passUser[p].name)}
       />
     ));
     return (
-      <div>
+      <div className="main-page">
         <Nav cClick={this.props.cClick} lClick={this.props.lClick}></Nav>
         {projects}
       </div>

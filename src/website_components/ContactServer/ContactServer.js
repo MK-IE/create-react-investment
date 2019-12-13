@@ -21,19 +21,15 @@ let userAuth = {
   postKey: 0
 };
 
-function errorHandler(e)
-{
-  if (e)
-  {
+function errorHandler(e) {
+  if (e) {
     return (userAuth.Error = true);
-  } else
-  {
+  } else {
     return (userAuth.Error = false);
   }
 }
 
-async function readMaxKey()
-{
+async function readMaxKey() {
   const fetch = firebase.database().ref("mPosts/");
   const getKey = await fetch.once("value");
   const val = getKey.val();
@@ -48,8 +44,7 @@ export function writeUserData(
   password,
   userType,
   salt
-)
-{
+) {
   let user = {
     name: name,
     email: email,
@@ -66,28 +61,23 @@ export function writeUserData(
   return userAuth.Error;
 }
 
-export async function readUserData(userName, password)
-{
+export async function readUserData(userName, password) {
   const fetch = firebase.database().ref("users/" + userName);
   const checkUser = await fetch.once("value");
 
-  if (checkUser.val() === null)
-  {
+  if (checkUser.val() === null) {
     return (userAuth.located = false);
   }
 
   let verification = passwordVerify(password, checkUser.val().salt);
-  if (checkUser.val().password === verification)
-  {
+  if (checkUser.val().password === verification) {
     return (userAuth.located = checkUser.val());
-  } else
-  {
+  } else {
     return (userAuth.located = false);
   }
 }
 
-export async function writePostData(title, body, userName)
-{
+export async function writePostData(title, body, userName) {
   await readMaxKey();
 
   let post = {
@@ -95,14 +85,11 @@ export async function writePostData(title, body, userName)
     body: body,
     userName: userName
   };
-  console.log(userAuth.postKey);
   firebase
     .database()
     .ref("posts/" + ++userAuth.postKey)
     .set(post, errorHandler);
-  console.log(userAuth.postKey);
-  if (!userAuth.Error)
-  {
+  if (!userAuth.Error) {
     firebase
       .database()
       .ref("mPosts/")
@@ -111,45 +98,18 @@ export async function writePostData(title, body, userName)
   return userAuth.Error;
 }
 
-export function readPostData(postKey)
-{
+export function readPostData(postKey) {
   firebase
     .database()
     .ref("posts/" + postKey)
     .once("value")
-    .then(function (snap)
-    {
-      if (snap.exists())
-      {
+    .then(function(snap) {
+      if (snap.exists()) {
         return (userAuth.post = snap.val());
-      } else
-      {
+      } else {
         return (userAuth.post = false);
       }
     })
     .catch(errorHandler);
   return userAuth.post;
-}
-
-export function checkDataBase(userName)
-{
-  firebase
-    .database()
-    .ref.child("users")
-    .orderByChild("ID")
-    .equalTo("U1EL5623")
-    .once("value", snapshot =>
-    {
-      if (snapshot.exists())
-      {
-        const userData = snapshot.val();
-        console.log("exists!", userData);
-      }
-    });
-}
-
-function generatePassword(password, salt)
-{
-  let verification = passwordVerify(password, salt);
-  return verification;
 }

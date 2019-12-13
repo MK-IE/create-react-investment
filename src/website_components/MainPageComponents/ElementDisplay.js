@@ -26,6 +26,15 @@ class ElementDisplay extends Component {
     const showcasePreview = !this.state.expand
       ? this.props.projectDes.substring(0, 500)
       : this.props.projectDes;
+    const showProfIcon =
+      this.props.pClick === "none" ? (
+        ""
+      ) : (
+        <a className="hover" onClick={this.props.pClick}>
+          <i className="icon-size material-icons">account_circle</i>
+        </a>
+      );
+
     const fullPage = !this.state.expand ? "container" : "d-flex container";
     return (
       <div className={"user-projects card " + fullPage}>
@@ -39,16 +48,14 @@ class ElementDisplay extends Component {
             <p className="card-text">{showcasePreview}</p>
           </a>
           <div className="btn-group-vertical float-right">
-            <button className=" like-btn" onClick={this.likeBtn}>
+            <button className="like-btn" onClick={this.likeBtn}>
               <i className="material-icons">keyboard_arrow_up</i>
             </button>
-            <span className="container text-center">{this.state.total}</span>
-            <button className=" dislike-btn" onClick={this.dislikeBtn}>
+            <span className="container">{this.state.total}</span>
+            <button className="dislike-btn" onClick={this.dislikeBtn}>
               <i className="material-icons">keyboard_arrow_down</i>
             </button>
-            <a className="hover" onClick={this.props.pClick}>
-              <i className="icon-size material-icons">account_circle</i>
-            </a>
+            {showProfIcon}
           </div>
         </div>
       </div>
