@@ -354,14 +354,14 @@ class CreateProfile extends Component {
                 </div>
               </div>
               <div className="form-row">
-                <div className="col">
+                <div className="col-sm">
                   <Input
                     placeholder={"Enter password"}
                     handleChange={this.handlePasswordChange}
                     title={"Password"}
                   />
                 </div>
-                <div className="col">
+                <div className="col-sm">
                   <Input
                     placeholder={"Enter password again"}
                     handleChange={this.handleSecondPasswordChange}
