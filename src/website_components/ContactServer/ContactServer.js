@@ -18,7 +18,8 @@ let userAuth = {
   located: null,
   Error: null,
   post: null,
-  postKey: 0
+  postKey: 0,
+  found: false
 };
 
 function errorHandler(e) {
@@ -59,6 +60,30 @@ export function writeUserData(
     .ref("users/" + userName)
     .set(user, errorHandler);
   return userAuth.Error;
+}
+
+export async function checkUserName(userName) {
+  const fetch = firebase.database().ref("users/" + userName);
+  const checkUser = await fetch.once("value");
+  if (checkUser.val() !== null) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export async function checkUserEmail(email) {
+  const fetch = firebase.database().ref("users/");
+  const checkUser = await fetch.once("value");
+  const loop = function(email) {
+    for (let i in checkUser.val()) {
+      if (checkUser.val()[i].email === email) {
+        return true;
+      }
+    }
+    return false;
+  };
+  return loop(email);
 }
 
 export async function readUserData(userName, password) {

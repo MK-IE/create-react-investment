@@ -3,8 +3,11 @@ import Select from "../ProfileFields/Select";
 import Input from "../ProfileFields/Input";
 import Match from "../ProfileFields/Match";
 import users from "./Users";
-import { writeUserData } from "../ContactServer/ContactServer";
-import { readUserData } from "../ContactServer/ContactServer";
+import {
+  writeUserData,
+  checkUserName,
+  checkUserEmail
+} from "../ContactServer/ContactServer";
 import { passwordHash } from "../AuxilaryFunctions/Hash";
 const userArray = users;
 
@@ -149,11 +152,7 @@ class CreateProfile extends Component {
     this.validateUserTypeSelection();
   }
 
-  handleFormSubmission(event) {
-    event.preventDefault();
-    let hashedPassword = passwordHash(this.state.newProfile.password);
-    let hash = hashedPassword[0];
-    let salt = hashedPassword[1];
+  addUser(hash, salt) {
     writeUserData(
       this.state.newProfile.userName,
       this.state.newProfile.name,
@@ -178,6 +177,20 @@ class CreateProfile extends Component {
     );
     this.setState({ passwordConfirm: "" });
     console.log("Submitted!");
+  }
+  async handleFormSubmission(event) {
+    event.preventDefault();
+    let hashedPassword = passwordHash(this.state.newProfile.password);
+    let hash = hashedPassword[0];
+    let salt = hashedPassword[1];
+    let userNameScan = await checkUserName(this.state.newProfile.userName);
+    let emailScan = await checkUserEmail(this.state.newProfile.email);
+    //Checking if the user is not in the database
+    if (!userNameScan && !emailScan) {
+      this.addUser(hash, salt);
+    } else {
+      console.log("Username or Email are already in use !");
+    }
   }
 
   validateForm() {
@@ -289,22 +302,22 @@ class CreateProfile extends Component {
   render() {
     return (
       <div className="create-profile">
-        <div className="container">
-          <h3 className="text-center">CREATE ACCOUNT</h3>
-        </div>
         <div className="d-flex full-height align-items-center justify-content-center">
           <div className="form-struct">
+            <div className="container">
+              <h3 className="text-center">CREATE ACCOUNT</h3>
+            </div>
             <form>
               <div className="form-row">
-                <div className="col-sm">
+                <div className="col">
                   <Input
                     placeholder={"Enter Profile Name"}
                     handleChange={this.handleUserNameChange}
-                    title={"Profile Name"}
+                    title={"Username"}
                     required
                   />
                 </div>
-                <div className="col-sm">
+                <div className="col">
                   <Input
                     placeholder={"Enter Name"}
                     handleChange={this.handleNameChange}
@@ -314,14 +327,14 @@ class CreateProfile extends Component {
                 </div>
               </div>
               <div className="form-row">
-                <div className="col-sm">
+                <div className="col">
                   <Input
                     placeholder={"Enter E-mail"}
                     handleChange={this.handleEmailChange}
                     title={"E-mail"}
                   />
                 </div>
-                <div className="col-sm">
+                <div className="col">
                   <Select
                     options={this.state.genderOptions}
                     placeholder={"Select Gender"}
@@ -331,7 +344,7 @@ class CreateProfile extends Component {
                 </div>
               </div>
               <div className="form-row">
-                <div className="col-sm">
+                <div className="col">
                   <Select
                     options={this.state.profileOptions}
                     placeholder={"Select User Type"}
@@ -341,14 +354,14 @@ class CreateProfile extends Component {
                 </div>
               </div>
               <div className="form-row">
-                <div className="col-sm">
+                <div className="col">
                   <Input
                     placeholder={"Enter password"}
                     handleChange={this.handlePasswordChange}
                     title={"Password"}
                   />
                 </div>
-                <div className="col-sm">
+                <div className="col">
                   <Input
                     placeholder={"Enter password again"}
                     handleChange={this.handleSecondPasswordChange}
@@ -361,8 +374,6 @@ class CreateProfile extends Component {
               </div>
               <button
                 className="btn btn-primary"
-                btn
-                btn-link
                 hover
                 disabled={!this.state.formValid}
                 name={"Submit Info!"}

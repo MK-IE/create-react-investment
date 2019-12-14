@@ -62,10 +62,7 @@ class Login extends Component {
         localUserData.email = userProfile.email;
         localUserData.gender = userProfile.gender;
         localUserData.userType = userProfile.userType;
-        this.setState(
-          { userData: localUserData },
-          console.log(this.state.userData)
-        );
+        this.setState({ userData: localUserData });
         //If this worked, we want to send them somewhere
       }
     } catch (err) {
@@ -76,11 +73,10 @@ class Login extends Component {
   render() {
     return (
       <div className="login-profile">
-        <div className="container">
-          <h3 className="text-center">LOGIN ACCOUNT</h3>
-        </div>
+        <div className="container"></div>
         <div className="d-flex full-height align-items-center justify-content-center">
           <div className="form-struct">
+            <h3 className="text-center">LOGIN ACCOUNT</h3>
             <form>
               <div className="form-row">
                 <Input
@@ -99,9 +95,6 @@ class Login extends Component {
               </div>
               <button
                 className="btn btn-primary"
-                btn
-                btn-link
-                hover
                 disabled={!this.state.formValid}
                 onClick={this.handleFormSubmission}
               >
@@ -110,7 +103,6 @@ class Login extends Component {
             </form>
           </div>
         </div>
-        {this.user}
       </div>
     );
   }

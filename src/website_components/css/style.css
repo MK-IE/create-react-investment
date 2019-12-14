@@ -14,11 +14,16 @@
     borders - 555555
     nav-background eeeeee
 */
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 body {
   background: #2c3e50;
   color: #f8f8f8;
 }
-
 
 .nav-bar {
   color: #333333;

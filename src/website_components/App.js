@@ -7,23 +7,31 @@ import LoginProfile from "./StructuredPages/LoginProfile";
 import LoadingScreen from "./StructuredPages/LoadingScreen";
 import UserPage from "./StructuredPages/UserPage";
 import Users from "./StructuredPages/Users";
+/* 
+  REFERENCES: url(https://material.io/resources/icons/)
+
+- App.js is the core of the whole application where it distributes resources in between different screens
+- state holds many different important parameters
+  load : Is a holader for the loading screen controlled within componentDidMount()
+  dislplayScreen : is the object which determines what is currently being rendered on screen
+*/
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.cClick = this.cClick.bind(this);
-    this.lClick = this.lClick.bind(this);
-    this.bClick = this.bClick.bind(this);
+    this.cClick = this.cClick.bind(this); // Create Account Click
+    this.lClick = this.lClick.bind(this); //Login Account Click
+    this.bClick = this.bClick.bind(this); //Back Button Click
     this.state = {
       load: false,
-      prevPage: <MainPage />,
+      prevPage: null,
       displayScreen: (
         <MainPage
           cClick={this.cClick}
           lClick={this.lClick}
           pClick={this.pClick}
           projectBase={Users}
-          passThis={this}
+          passThis={this} //Pass the reference of App.js to be able to bind stuff in other files
         />
       )
     };
@@ -67,7 +75,7 @@ class App extends Component {
   }
   render() {
     const backButton =
-      this.state.displayScreen.type.name !== "MainPage" ? (
+      this.state.prevPage !== null ? (
         <div className="container fixed-bottom">
           <a className="hover" onClick={this.bClick}>
             <i className="material-icons fixed-bottom back-btn">
