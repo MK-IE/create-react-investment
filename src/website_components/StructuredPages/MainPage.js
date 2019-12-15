@@ -23,7 +23,9 @@ class MainPage extends Component {
       <div className="main-page">
         <Nav cClick={this.props.cClick} lClick={this.props.lClick}></Nav>
         {projects}
+
       </div>
+
     );
   }
 }
