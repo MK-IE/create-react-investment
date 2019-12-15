@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
+import "firebase/storage";
 import { passwordVerify } from "../AuxilaryFunctions/Hash";
 
 const firebaseConfig = {
@@ -11,6 +12,7 @@ const firebaseConfig = {
   messagingSenderId: "779045166015",
   appId: "1:779045166015:web:9c9e3ab9c07b9f414f1f0a"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
@@ -75,7 +77,7 @@ export async function checkUserName(userName) {
 export async function checkUserEmail(email) {
   const fetch = firebase.database().ref("users/");
   const checkUser = await fetch.once("value");
-  const loop = function(email) {
+  const loop = function (email) {
     for (let i in checkUser.val()) {
       if (checkUser.val()[i].email === email) {
         return true;
@@ -102,12 +104,13 @@ export async function readUserData(userName, password) {
   }
 }
 
-export async function writePostData(title, body, userName) {
+export async function writePostData(title, body, userName, imageName) {
   await readMaxKey();
 
   let post = {
     title: title,
     body: body,
+    imageName: imageName,
     userName: userName
   };
   firebase
@@ -123,12 +126,34 @@ export async function writePostData(title, body, userName) {
   return userAuth.Error;
 }
 
+export async function writeStorage(image) {
+  const storageUpload = firebase.storage().ref();
+  const checkFinish = storageUpload.child(image.name).put(image);
+
+  if (checkFinish.snapshot.ref !== null) {
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+export async function readStorage(imageName) {
+  let image = firebase.storage.ref().child(imageName);
+  let reader = new FileReader();
+  reader.onLoad = function (event) {
+    image = event.result;
+  }
+  reader.readDataAsUrl(image);
+  return image;
+}
+
 export function readPostData(postKey) {
   firebase
     .database()
     .ref("posts/" + postKey)
     .once("value")
-    .then(function(snap) {
+    .then(function (snap) {
       if (snap.exists()) {
         return (userAuth.post = snap.val());
       } else {
@@ -138,3 +163,4 @@ export function readPostData(postKey) {
     .catch(errorHandler);
   return userAuth.post;
 }
+

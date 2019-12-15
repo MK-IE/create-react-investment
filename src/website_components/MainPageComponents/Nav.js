@@ -17,32 +17,38 @@ class Nav extends Component {
   render() {
     const show = this.state.menu ? "show" : "";
     return (
-      <nav className="fixed-top nav-bar navbar navbar-expand-lg">
-        <span className="navbar-brand">CREATE-REACT-INVESTMENT</span>
-        <button
-          className="navbar-toggler"
-          type="button"
-          onClick={this.toggleBtn}
-        >
-          <i className="material-icons">reorder</i>
-        </button>
-        <div className={"collapse navbar-collapse " + show}>
-          <div className="navbar-nav">
-            <button
-              className="btn btn-link nav-item"
-              onClick={this.props.cClick}
-            >
-              CREATE ACCOUNT
-            </button>
-            <button
-              className="btn btn-link nav-item"
-              onClick={this.props.lClick}
-            >
-              LOGIN
-            </button>
+        <nav className="fixed-top nav-bar navbar navbar-expand-lg">
+          <span className="navbar-brand">CREATE-REACT-INVESTMENT</span>
+          <button
+              className="navbar-toggler"
+              type="button"
+              onClick={this.toggleBtn}
+          >
+            <i className="material-icons">reorder</i>
+          </button>
+          <div className={"collapse navbar-collapse " + show}>
+            <div className="navbar-nav">
+              <button
+                  className="btn btn-link nav-item"
+                  onClick={this.props.cClick}
+              >
+                CREATE ACCOUNT
+              </button>
+              <button
+                  className="btn btn-link nav-item"
+                  onClick={this.props.lClick}
+              >
+                LOGIN
+              </button>
+              <button
+                  className="btn btn-link nav-item"
+                  onClick={this.props.aClick}
+              >
+                UPLOAD PROJECT
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
     );
   }
 }
