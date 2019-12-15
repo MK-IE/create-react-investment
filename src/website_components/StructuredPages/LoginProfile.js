@@ -6,10 +6,8 @@ import Match from "../ProfileFields/Match";
 import { readUserData } from "../ContactServer/ContactServer";
 import { passwordHash } from "../AuxilaryFunctions/Hash";
 
-class Login extends Component
-{
-  constructor(props)
-  {
+class Login extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       password: "",
@@ -31,89 +29,80 @@ class Login extends Component
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
   }
 
-  handleNameChange(event)
-  {
+  handleNameChange(event) {
     let value = event.target.value;
     this.setState({ userName: value });
   }
 
-  handlePasswordChange(event)
-  {
+  handlePasswordChange(event) {
     let value = event.target.value;
-    this.setState({ password: value }, () =>
-    {
+    this.setState({ password: value }, () => {
       console.log(this.state.password);
     });
   }
 
-  handleFormSubmission(event)
-  {
+  handleFormSubmission(event) {
     event.preventDefault();
     this.getUser();
   }
 
-  async getUser()
-  {
-    try
-    {
+  async getUser() {
+    try {
       let userProfile = await readUserData(
         this.state.userName,
         this.state.password
       );
       console.log(userProfile);
-      if (userProfile === false)
-      {
+      if (userProfile === false) {
         console.log("Incorrect username or password");
-      } else
-      {
+      } else {
         let localUserData = { ...this.state.userData };
         localUserData.userName = this.state.userName;
         localUserData.name = userProfile.name;
         localUserData.email = userProfile.email;
         localUserData.gender = userProfile.gender;
         localUserData.userType = userProfile.userType;
-        this.setState(
-          { userData: localUserData },
-          console.log(this.state.userData)
-        );
+        this.setState({ userData: localUserData });
         //If this worked, we want to send them somewhere
       }
-    } catch (err)
-    {
+    } catch (err) {
       console.log("Here is the error: " + err);
     }
   }
 
-  render()
-  {
+  render() {
     return (
-      <div>
-        <form>
-          <Input
-            placeholder={"Enter Name"}
-            handleChange={this.handleNameChange}
-            title={"Name"}
-            required
-          />
-          <Input
-            placeholder={"Enter password"}
-            handleChange={this.handlePasswordChange}
-            title={"Password"}
-          />
-          <a>
-            <button
-              className="button"
-              btn
-              btn-link
-              hover
-              disabled={!this.state.formValid}
-              onClick={this.handleFormSubmission}
-            >
-              Log In!
-            </button>
-          </a>
-        </form>
-        {this.user}
+      <div className="login-profile">
+        <div className="container"></div>
+        <div className="d-flex full-height align-items-center justify-content-center">
+          <div className="form-struct">
+            <h3 className="text-center">LOGIN ACCOUNT</h3>
+            <form>
+              <div className="form-row">
+                <Input
+                  placeholder={"Enter Name"}
+                  handleChange={this.handleNameChange}
+                  title={"Username"}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <Input
+                  placeholder={"Enter password"}
+                  handleChange={this.handlePasswordChange}
+                  title={"Password"}
+                />
+              </div>
+              <button
+                className="btn btn-primary"
+                disabled={!this.state.formValid}
+                onClick={this.handleFormSubmission}
+              >
+                Log In!
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

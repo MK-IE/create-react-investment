@@ -14,6 +14,12 @@
     borders - 555555
     nav-background eeeeee
 */
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 body {
   background: #2c3e50;
   color: #f8f8f8;
@@ -32,14 +38,18 @@ body {
   font-size: 40px;
   color: red;
 }
+
 .user-projects {
-  background: #535c68;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-  color: #f8f8f8;
   margin-top: 40px;
   margin-bottom: 0px;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+.user-projects,
+.form-struct {
+  background: #535c68;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  color: #f8f8f8;
 }
 
 .like-btn,
@@ -86,6 +96,14 @@ body {
   cursor: pointer;
 }
 
-.load-screen {
+.full-height {
   height: 100vh;
+}
+
+.form-struct {
+  padding: 30px 30px;
+}
+
+.match-struct {
+  margin: 20px 0;
 }
