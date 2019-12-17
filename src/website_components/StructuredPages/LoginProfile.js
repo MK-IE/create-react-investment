@@ -5,6 +5,7 @@ import Input from "../ProfileFields/Input";
 import Match from "../ProfileFields/Match";
 import { readUserData } from "../ContactServer/ContactServer";
 import { passwordHash } from "../AuxilaryFunctions/Hash";
+import { readAllPost } from "../ContactServer/ContactServer";
 
 class Login extends Component {
   constructor(props) {
@@ -47,6 +48,8 @@ class Login extends Component {
   }
 
   async getUser() {
+    const getPosts = await readAllPost();
+    console.log(getPosts);
     try {
       let userProfile = await readUserData(
         this.state.userName,
@@ -79,27 +82,43 @@ class Login extends Component {
             <h3 className="text-center">LOGIN ACCOUNT</h3>
             <form>
               <div className="form-row">
-                <Input
-                  placeholder={"Enter Name"}
-                  handleChange={this.handleNameChange}
-                  title={"Username"}
-                  required
-                />
+                <div className="col">
+                  <div className="form-group">
+                    <Input
+                      placeholder={"Enter Name"}
+                      handleChange={this.handleNameChange}
+                      title={"Username"}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
               <div className="form-row">
-                <Input
-                  placeholder={"Enter password"}
-                  handleChange={this.handlePasswordChange}
-                  title={"Password"}
-                />
+                <div className="col">
+                  <div className="form-group">
+                    <Input
+                      placeholder={"Enter password"}
+                      handleChange={this.handlePasswordChange}
+                      title={"Password"}
+                      className="form-control"
+                    />
+                  </div>
+                </div>
               </div>
-              <button
-                className="btn btn-primary"
-                disabled={!this.state.formValid}
-                onClick={this.handleFormSubmission}
-              >
-                Log In!
-              </button>
+              <div className="form-row">
+                <div className="col">
+                  <div className="form-group">
+                    <button
+                      className="btn btn-primary form-control"
+                      disabled={!this.state.formValid}
+                      onClick={this.handleFormSubmission}
+                    >
+                      Log In!
+                    </button>
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>

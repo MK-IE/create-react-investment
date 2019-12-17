@@ -8,6 +8,7 @@ import LoginProfile from "./StructuredPages/LoginProfile";
 import LoadingScreen from "./StructuredPages/LoadingScreen";
 import UserPage from "./StructuredPages/UserPage";
 import Users from "./StructuredPages/Users";
+import { readAllPost } from "./ContactServer/ContactServer";
 
 class App extends Component {
   constructor(props) {
@@ -17,17 +18,26 @@ class App extends Component {
     this.bClick = this.bClick.bind(this);
     this.aClick = this.aClick.bind(this);
     this.state = {
+      stop: false,
       load: false,
       prevPage: <MainPage />,
       displayScreen: (
-          <MainPage
-              cClick={this.cClick}
-              lClick={this.lClick}
-              pClick={this.pClick}
-              aClick={this.aClick}
-              projectBase={Users}
-              passThis={this}
-          />
+        <MainPage
+          cClick={this.cClick}
+          lClick={this.lClick}
+          pClick={this.pClick}
+          aClick={this.aClick}
+          projectBase={[
+            {
+              title: "Hello",
+              body: "Hello",
+              imageName:
+                "https://images.pexels.com/photos/3184163/pexels-photo-3184163.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940://www.pexels.com/photo/woman-using-computer-3184163/",
+              userName: "Hello"
+            }
+          ]}
+          passThis={this}
+        />
       )
     };
   }
@@ -45,15 +55,16 @@ class App extends Component {
   }
   pClick(userName) {
     this.callLoad();
-    const userProjects = Users.filter(function(o) {
-      return o.name === userName;
-    });
+    console.log("THE USERNAME", userName);
     this.setState({
-      displayScreen: <UserPage uName={userName} projectBase={userProjects} />
+      displayScreen: <UserPage uName={userName} />
     });
   }
   bClick() {
     this.callLoad();
+    if (this.state.displayScreen.type.name === "UploadProject") {
+      this.setState({ stop: false });
+    }
     this.setState({ displayScreen: this.state.prevPage });
   }
   callLoad() {
@@ -61,12 +72,33 @@ class App extends Component {
     this.setState({ load: false });
     this.componentDidMount();
   }
+
+  async readProjects() {
+    const getAll = await readAllPost();
+    if (getAll !== false) {
+      this.setState({
+        displayScreen: (
+          <MainPage
+            cClick={this.cClick}
+            lClick={this.lClick}
+            pClick={this.pClick}
+            aClick={this.aClick}
+            projectBase={getAll}
+            passThis={this}
+          />
+        ),
+        stop: true
+      });
+    }
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({ load: true });
     }, 1000);
   }
   switchPages() {
+    if (!this.state.stop) this.readProjects();
     if (!this.state.load) {
       return <LoadingScreen />;
     }
@@ -74,22 +106,22 @@ class App extends Component {
   }
   render() {
     const backButton =
-        this.state.displayScreen.type.name !== "MainPage" ? (
-            <div className="container fixed-bottom">
-              <a className="hover" onClick={this.bClick}>
-                <i className="material-icons fixed-bottom back-btn">
-                  subdirectory_arrow_left
-                </i>
-              </a>
-            </div>
-        ) : (
-            ""
-        );
-    return (
-        <div className="App">
-          {backButton}
-          {this.switchPages()}
+      this.state.displayScreen.type.name !== "MainPage" ? (
+        <div className="container fixed-bottom">
+          <a className="hover" onClick={this.bClick}>
+            <i className="material-icons fixed-bottom back-btn">
+              subdirectory_arrow_left
+            </i>
+          </a>
         </div>
+      ) : (
+        ""
+      );
+    return (
+      <div className="App">
+        {backButton}
+        {this.switchPages()}
+      </div>
     );
   }
 }

@@ -303,7 +303,7 @@ class CreateProfile extends Component {
     return (
       <div className="create-profile">
         <div className="d-flex full-height align-items-center justify-content-center">
-          <div className="form-struct">
+          <div className="form-struct card">
             <div className="container">
               <h3 className="text-center">CREATE ACCOUNT</h3>
             </div>
@@ -372,15 +372,20 @@ class CreateProfile extends Component {
               <div className="match-struct">
                 <Match match={this.state.match} />
               </div>
-              <button
-                className="btn btn-primary"
-                hover
-                disabled={!this.state.formValid}
-                name={"Submit Info!"}
-                onClick={this.handleFormSubmission}
-              >
-                Submit!
-              </button>
+              <div className="form-row">
+                <div className="col">
+                  <div className="form-group">
+                    <button
+                      className="btn btn-primary form-control"
+                      disabled={!this.state.formValid}
+                      name={"Submit Info!"}
+                      onClick={this.handleFormSubmission}
+                    >
+                      Submit!
+                    </button>
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>

@@ -1,13 +1,15 @@
 import React from "react";
 import { Component } from "react";
 import pImage from "../img/user-project.jpg";
+import { readStorage } from "../ContactServer/ContactServer";
 
 class ElementDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
       total: 0,
-      expand: false
+      expand: false,
+      image: this.props.image
     };
     this.likeBtn = this.likeBtn.bind(this);
     this.dislikeBtn = this.dislikeBtn.bind(this);
@@ -21,6 +23,10 @@ class ElementDisplay extends Component {
   }
   expandBtn() {
     this.setState({ expand: !this.state.expand });
+  }
+  async componentDidMount() {
+    const imageGet = await readStorage(this.props.image);
+    this.setState({ image: imageGet });
   }
   render() {
     const showcasePreview = !this.state.expand
@@ -38,7 +44,7 @@ class ElementDisplay extends Component {
     const fullPage = !this.state.expand ? "container" : "d-flex container";
     return (
       <div className={"user-projects card " + fullPage}>
-        <img src={pImage} className="card-img-top"></img>
+        <img src={this.state.image} className="card-img-top"></img>
         <div className="card-body">
           <div className="card-title">
             <i>{this.props.userName}</i>

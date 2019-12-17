@@ -10,22 +10,26 @@ class MainPage extends Component {
   render() {
     //Dummy element displays
     const passUser = this.props.projectBase;
+    console.log(passUser);
     const projects = this.nProjects.map(p => (
       <ElementDisplay
         key={p.toString()}
-        userName={passUser[p].name}
-        projectDes={passUser[p].des}
+        userName={passUser[p].userName}
+        projectDes={passUser[p].body}
         projectTitle={passUser[p].title}
-        pClick={this.props.pClick.bind(this.props.passThis, passUser[p].name)}
+        image={passUser[p].imageName}
+        pClick={this.props.pClick.bind(this.props.passThis, passUser[p].userName)}
       />
     ));
     return (
       <div className="main-page">
-        <Nav cClick={this.props.cClick} lClick={this.props.lClick} aClick={this.props.aClick}></Nav>
+        <Nav
+          cClick={this.props.cClick}
+          lClick={this.props.lClick}
+          aClick={this.props.aClick}
+        ></Nav>
         {projects}
-
       </div>
-
     );
   }
 }
