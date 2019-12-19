@@ -2,6 +2,8 @@ import React from "react";
 import ElementDisplay from "../MainPageComponents/ElementDisplay";
 import { Component } from "react";
 
+//UserPage loads all of a user's projects, as opposed to all of the projects on the database.
+
 class UserPage extends Component {
   constructor(props) {
     super(props);

@@ -2,9 +2,21 @@ import React from "react";
 import { Component } from "react";
 import { readStorage } from "../ContactServer/ContactServer";
 /*
-  OMITTED FEATURE :
-   
+  Liking and disling projects this was an intended feature for accounts of type investors 
+  
+  -- state --
+    expand : Allows expanding of projects to showcase all the description
+    image : Used to showcase the image
+
+  -- functions --
+    UNSAFE_componentWillMount : Gets the image
+    expandBtn : Expands the card to showcase the whole description by changing state
+
+  OMITTED FEATURE ( to prevent feature creep ):
+  
+  this.state = {
   //total: 0
+  };
 
   // likeBtn() {
   //   this.setState({ total: this.state.total + 1 });

@@ -3,6 +3,27 @@ import "firebase/database";
 import "firebase/storage";
 import { passwordVerify } from "../AuxilaryFunctions/Hash";
 
+/* 
+
+  Intializes FireBase and has all important functions to read and write to the server
+  We utilize async to make sure the application waits for these executions before proceeding to do other things
+
+  -- functions --
+  
+    errorHandler : Just lets us know if any error has occured with a boolean.
+    readMaxKey : Gets the max key off firebase to make sure the next post doesn't overwrite any other key for other posts.
+    writeUserData : Specifies the structure of the user object.
+    checkUserName : Looks up if a user-name already exists in the database
+    checkUserEmail : Looks up if the email has been used in a different account
+    readUserData : Pull of the user-data based on the username if it a wrong user-name it will return false
+    writePostData : Makes a new post with the specified structure and gets the newest key to post with using readMaxKey
+    writeStorage : Used for saving images on the databse
+    readStorage : Pulls of the images
+    readAllPosts : Gets all the posts which are on the database 
+
+*/
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyBdpf_wxtSI1tFtQCNNST1q-OXlfF6K0kU",
   authDomain: "create-react-investment.firebaseapp.com",
@@ -142,16 +163,6 @@ export async function readStorage(imageName) {
     .child(imageName);
   const image = await storage.getDownloadURL();
   return image;
-}
-
-export async function readPostData(postKey) {
-  const fetch = firebase.database().ref("posts/" + postKey);
-  const getPost = await fetch.once("value");
-  if (getPost.val() !== null) {
-    return getPost.val();
-  } else {
-    return false;
-  }
 }
 
 export async function readAllPost() {

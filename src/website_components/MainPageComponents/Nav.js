@@ -1,6 +1,10 @@
 import React from "react";
 import { Component } from "react";
 
+/*
+  Displays the navigation bar code here is very self explanatory
+*/
+
 class Nav extends Component {
   constructor(props) {
     super(props);

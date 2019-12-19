@@ -2,13 +2,17 @@ import React from "react";
 import { Component } from "react";
 import Nav from "../MainPageComponents/Nav";
 import ElementDisplay from "../MainPageComponents/ElementDisplay";
+
+/* 
+  Displays all projects and provides the navigation bar
+
+*/
 class MainPage extends Component {
   constructor(props) {
     super(props);
     this.nProjects = [...Array(this.props.projectBase.length).keys()]; //Get our keys for each react element..
   }
   render() {
-    //Dummy element displays
     const passUser = this.props.projectBase;
     const projects = this.nProjects.map(p => (
       <ElementDisplay

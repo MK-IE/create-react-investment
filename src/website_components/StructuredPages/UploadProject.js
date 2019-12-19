@@ -2,6 +2,11 @@ import React from "react";
 import { Component } from "react";
 import { writeStorage, writePostData } from "../ContactServer/ContactServer";
 
+/*
+  Allows uploading a project there is few checks here which have to be ticked to upload a project
+  self-explanatory code nothing complex occurs here.
+
+*/
 class UploadProject extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +21,14 @@ class UploadProject extends Component {
   handleChange(e) {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      this.setState({ image: image });
+      if (image.type.includes("image")) {
+        this.setState({ image: image });
+      } else {
+        this.setState({
+          error: <p className="danger"> Only Images Are Accepted !</p>
+        });
+        e.target.value = "";
+      }
     }
   }
   async handleUpload(event) {
@@ -40,7 +52,6 @@ class UploadProject extends Component {
     ) {
       const image = this.state.image;
       const storageCall = await writeStorage(image);
-      console.log(storageCall);
       if (storageCall) {
         writePostData(getTitle, getDesc, this.state.uName, image.name);
         this.clearValues();
