@@ -16,40 +16,71 @@ class Nav extends Component {
 
   render() {
     const show = this.state.menu ? "show" : "";
-    return (
+    if (this.props.passThis.state.loggedIn === false) {
+      return (
         <nav className="fixed-top nav-bar navbar navbar-expand-lg">
           <span className="navbar-brand">CREATE-REACT-INVESTMENT</span>
           <button
-              className="navbar-toggler"
-              type="button"
-              onClick={this.toggleBtn}
+            className="navbar-toggler"
+            type="button"
+            onClick={this.toggleBtn}
           >
             <i className="material-icons">reorder</i>
           </button>
           <div className={"collapse navbar-collapse " + show}>
             <div className="navbar-nav">
+              <span className="navbar-brand">
+                Welcome, {this.props.passThis.state.userName}
+              </span>
               <button
-                  className="btn btn-link nav-item"
-                  onClick={this.props.cClick}
+                className="btn btn-link nav-item"
+                onClick={this.props.cClick}
               >
                 CREATE ACCOUNT
               </button>
               <button
-                  className="btn btn-link nav-item"
-                  onClick={this.props.lClick}
+                className="btn btn-link nav-item"
+                onClick={this.props.lClick}
               >
                 LOGIN
               </button>
+            </div>
+          </div>
+        </nav>
+      );
+    } else {
+      return (
+        <nav className="fixed-top nav-bar navbar navbar-expand-lg">
+          <span className="navbar-brand">CREATE-REACT-INVESTMENT</span>
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={this.toggleBtn}
+          >
+            <i className="material-icons">reorder</i>
+          </button>
+          <div className={"collapse navbar-collapse " + show}>
+            <div className  ="navbar-nav">
+              <span className="navbar-brand">
+                Welcome, {this.props.passThis.state.userName}
+              </span>
               <button
-                  className="btn btn-link nav-item"
-                  onClick={this.props.aClick}
+                className="btn btn-link nav-item"
+                onClick={this.props.outClick}
+              >
+                LOG OUT
+              </button>
+              <button
+                className="btn btn-link nav-item"
+                onClick={this.props.aClick}
               >
                 UPLOAD PROJECT
               </button>
             </div>
           </div>
         </nav>
-    );
+      );
+    }
   }
 }
 

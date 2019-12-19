@@ -11,7 +11,7 @@ const Input = props => {
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.handleChange}
-        extra={props.extra}
+        type={props.type}
       />
     </div>
   );

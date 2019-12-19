@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import Select from "../ProfileFields/Select";
 import Input from "../ProfileFields/Input";
 import Match from "../ProfileFields/Match";
-import users from "./Users";
 import {
   writeUserData,
   checkUserName,
   checkUserEmail
 } from "../ContactServer/ContactServer";
 import { passwordHash } from "../AuxilaryFunctions/Hash";
-const userArray = users;
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -39,8 +37,7 @@ class CreateProfile extends Component {
         userName: "",
         email: "",
         password: "",
-        gender: "",
-        userType: ""
+        validate: ""
       },
 
       passwordConfirm: "",
@@ -59,7 +56,9 @@ class CreateProfile extends Component {
       this
     );
     this.handleUserTypeChange = this.handleUserTypeChange.bind(this);
-    this.handleFormSubmission = this.handleFormSubmission.bind(this);
+    this.handleCreationFormSubmission = this.handleCreationFormSubmission.bind(
+      this
+    );
     this.validateName = this.validateName.bind(this);
     this.validateForm = this.validateForm.bind(this);
   }
@@ -178,7 +177,7 @@ class CreateProfile extends Component {
     this.setState({ passwordConfirm: "" });
     console.log("Submitted!");
   }
-  async handleFormSubmission(event) {
+  async handleCreationFormSubmission(event) {
     event.preventDefault();
     let hashedPassword = passwordHash(this.state.newProfile.password);
     let hash = hashedPassword[0];
@@ -188,8 +187,11 @@ class CreateProfile extends Component {
     //Checking if the user is not in the database
     if (!userNameScan && !emailScan) {
       this.addUser(hash, salt);
+      this.props.finalLogIn(this.state.newProfile.userName);
     } else {
-      console.log("Username or Email are already in use !");
+      let localFormErrors = { ...this.state.formErrors };
+      localFormErrors.validate = "* Username or email is already in use!";
+      this.setState({ formErrors: localFormErrors });
     }
   }
 
@@ -217,7 +219,8 @@ class CreateProfile extends Component {
     let localFormErrors = { ...this.state.formErrors };
 
     if (name.length < 5) {
-      localFormErrors.name = "The name is too short.";
+      localFormErrors.name =
+        "* The name is too short. Please include first and last name.";
       this.setState({ nameValid: false });
     } else {
       localFormErrors.name = "";
@@ -230,10 +233,10 @@ class CreateProfile extends Component {
     let localFormErrors = { ...this.state.formErrors };
 
     if (userName.length < 5) {
-      localFormErrors.name = "The name is too short.";
+      localFormErrors.userName = "* The username is too short.";
       this.setState({ userNameValid: false });
     } else {
-      localFormErrors.name = "";
+      localFormErrors.userName = "";
       this.setState({ userNameValid: true });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
@@ -242,9 +245,10 @@ class CreateProfile extends Component {
   validateEmail(email) {
     //API validation occurs here
     let localFormErrors = { ...this.state.formErrors };
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if (email.length < 4) {
-      localFormErrors.email = "The email is too short.";
+    if (regex.test(email) === false) {
+      localFormErrors.email = "* Invalid email address.";
       this.setState({ emailValid: false });
     } else {
       localFormErrors.email = "";
@@ -260,7 +264,6 @@ class CreateProfile extends Component {
       localFormErrors.gender = "";
       this.setState({ genderSelectionValid: true });
     } else if (gender == "Select Gender") {
-      localFormErrors.gender = "No gender selected.";
       this.setState({ genderSelectionValid: false });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
@@ -274,7 +277,6 @@ class CreateProfile extends Component {
       localFormErrors.userType = "";
       this.setState({ userTypeValid: true });
     } else {
-      localFormErrors.userType = "No user type selected.";
       this.setState({ userTypeValid: false });
     }
     this.setState({ formErrors: localFormErrors }, this.validateForm);
@@ -290,7 +292,7 @@ class CreateProfile extends Component {
       password.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1
     ) {
       localFormErrors.password =
-        "Must be longer than seven characters, less than sixty four and contain letters and numbers.";
+        "* Must be longer than seven characters, less than sixty four and contain letters and numbers.";
       this.setState({ passwordValid: false });
     } else {
       localFormErrors.password = "";
@@ -303,7 +305,7 @@ class CreateProfile extends Component {
     return (
       <div className="create-profile">
         <div className="d-flex full-height align-items-center justify-content-center">
-          <div className="form-struct card">
+          <div className="form-struct">
             <div className="container">
               <h3 className="text-center">CREATE ACCOUNT</h3>
             </div>
@@ -372,20 +374,23 @@ class CreateProfile extends Component {
               <div className="match-struct">
                 <Match match={this.state.match} />
               </div>
-              <div className="form-row">
-                <div className="col">
-                  <div className="form-group">
-                    <button
-                      className="btn btn-primary form-control"
-                      disabled={!this.state.formValid}
-                      name={"Submit Info!"}
-                      onClick={this.handleFormSubmission}
-                    >
-                      Submit!
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <button
+                className="btn btn-primary"
+                disabled={!this.state.formValid}
+                name={"Submit Info!"}
+                onClick={this.handleCreationFormSubmission}
+              >
+                Submit!
+              </button>
+              <br />
+              <span className="danger">{this.state.formErrors.name}</span>
+              <br />
+              <span className="danger">{this.state.formErrors.userName}</span>
+              <br />
+              <span className="danger">{this.state.formErrors.email}</span>
+              <br />
+              <span className="danger">{this.state.formErrors.password}</span>
+              <span className="danger">{this.state.formErrors.validate}</span>
             </form>
           </div>
         </div>

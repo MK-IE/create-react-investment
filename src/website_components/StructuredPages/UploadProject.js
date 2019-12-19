@@ -7,7 +7,8 @@ class UploadProject extends Component {
     super(props);
     this.state = {
       image: null,
-      error: null
+      error: null,
+      uName: this.props.uName
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
@@ -23,17 +24,25 @@ class UploadProject extends Component {
     const getTitle = document.getElementById("title").value;
     const getDesc = document.getElementById("desc").value;
     let report = <p className="danger"> Something Went Wrong !</p>;
+    if (getDesc.length < 500) {
+      report = (
+        <p className="danger">
+          {" "}
+          Description Must Be At Least 500 Characters Long !
+        </p>
+      );
+    }
+
     if (
       this.state.image !== null &&
       getTitle.length !== 0 &&
-      getDesc.length !== 0
+      getDesc.length >= 500
     ) {
       const image = this.state.image;
       const storageCall = await writeStorage(image);
-      console.log("not wrritten");
       console.log(storageCall);
       if (storageCall) {
-        await writePostData(getTitle, getDesc, "nobody", image.name);
+        writePostData(getTitle, getDesc, this.state.uName, image.name);
         this.clearValues();
         report = <p className="success"> Uploaded Successfully !</p>;
       }
@@ -60,7 +69,7 @@ class UploadProject extends Component {
               <div className="form-row">
                 <div className="col">
                   <div className="form-group">
-                  <label>Title</label>
+                    <label>Title</label>
                     <input
                       type="text"
                       name="title"
@@ -75,7 +84,7 @@ class UploadProject extends Component {
               <div className="form-row">
                 <div className="col">
                   <div className="form-group">
-                  <label>Description</label>
+                    <label>Description</label>
                     <textarea
                       name="body"
                       id="desc"
@@ -90,7 +99,7 @@ class UploadProject extends Component {
               <div className="form-row">
                 <div className="col">
                   <div className="form-group">
-                  <label>Choose File</label>
+                    <label>Choose File</label>
                     <input
                       type="file"
                       id="uploader"

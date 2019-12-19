@@ -42,14 +42,19 @@ body {
 .user-projects {
   margin-top: 40px;
   margin-bottom: 0px;
-  padding-top: 20px;
-  padding-bottom: 20px;
 }
 .user-projects,
-.form-struct {
+.form-struct,
+.user-display {
   background: #535c68;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
   color: #f8f8f8;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.user-projects-img {
+  height: 600px;
 }
 
 .like-btn,

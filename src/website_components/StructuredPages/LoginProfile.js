@@ -1,11 +1,7 @@
 import React from "react";
 import { Component } from "react";
-import Select from "../ProfileFields/Select";
 import Input from "../ProfileFields/Input";
-import Match from "../ProfileFields/Match";
 import { readUserData } from "../ContactServer/ContactServer";
-import { passwordHash } from "../AuxilaryFunctions/Hash";
-import { readAllPost } from "../ContactServer/ContactServer";
 
 class Login extends Component {
   constructor(props) {
@@ -22,7 +18,8 @@ class Login extends Component {
         gender: "",
         name: "",
         userType: ""
-      }
+      },
+      error: ""
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -48,8 +45,6 @@ class Login extends Component {
   }
 
   async getUser() {
-    const getPosts = await readAllPost();
-    console.log(getPosts);
     try {
       let userProfile = await readUserData(
         this.state.userName,
@@ -57,16 +52,27 @@ class Login extends Component {
       );
       console.log(userProfile);
       if (userProfile === false) {
-        console.log("Incorrect username or password");
+        this.setState({
+          error: <p className="danger">Incorrect username or password</p>
+        });
       } else {
-        let localUserData = { ...this.state.userData };
-        localUserData.userName = this.state.userName;
-        localUserData.name = userProfile.name;
-        localUserData.email = userProfile.email;
-        localUserData.gender = userProfile.gender;
-        localUserData.userType = userProfile.userType;
-        this.setState({ userData: localUserData });
+        console.log(this.state.userName);
+        this.setState(
+          {
+            userData: {
+              ...this.state.userData,
+              userName: this.state.userName,
+              name: userProfile.name,
+              email: userProfile.email,
+              gender: userProfile.gender,
+              userType: userProfile.userType
+            }
+          },
+          () => console.log(this.state.userData)
+        );
         //If this worked, we want to send them somewhere
+        this.props.finalLogIn(this.state.userData.userName);
+        this.setState({ userName: "", password: "" });
       }
     } catch (err) {
       console.log("Here is the error: " + err);
@@ -88,8 +94,7 @@ class Login extends Component {
                       placeholder={"Enter Name"}
                       handleChange={this.handleNameChange}
                       title={"Username"}
-                      className="form-control"
-                      required
+                      value={this.state.userName}
                     />
                   </div>
                 </div>
@@ -101,7 +106,8 @@ class Login extends Component {
                       placeholder={"Enter password"}
                       handleChange={this.handlePasswordChange}
                       title={"Password"}
-                      className="form-control"
+                      type={"password"}
+                      value={this.state.password}
                     />
                   </div>
                 </div>
@@ -119,6 +125,7 @@ class Login extends Component {
                   </div>
                 </div>
               </div>
+              {this.state.error}
             </form>
           </div>
         </div>
