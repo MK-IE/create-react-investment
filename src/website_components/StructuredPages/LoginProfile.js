@@ -3,6 +3,8 @@ import { Component } from "react";
 import Input from "../ProfileFields/Input";
 import { readUserData } from "../ContactServer/ContactServer";
 
+//LoginProfile manages logging in functionality for accounts already created
+
 class Login extends Component {
   constructor(props) {
     super(props);

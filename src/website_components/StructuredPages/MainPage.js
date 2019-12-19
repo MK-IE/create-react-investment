@@ -2,6 +2,8 @@ import React from "react";
 import { Component } from "react";
 import Nav from "../MainPageComponents/Nav";
 import ElementDisplay from "../MainPageComponents/ElementDisplay";
+//MainPage is what is rendered in the standard interface when the user scrolls through profiles
+
 class MainPage extends Component {
   constructor(props) {
     super(props);

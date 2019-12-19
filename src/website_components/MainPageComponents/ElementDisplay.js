@@ -1,8 +1,9 @@
 import React from "react";
 import { Component } from "react";
 import { readStorage } from "../ContactServer/ContactServer";
+//Element display component will load any project examples when put into use
 /*
-  OMITTED FEATURE :
+  OMITTED FEATURE (To prevent feature creep) :
    
   //total: 0
 
