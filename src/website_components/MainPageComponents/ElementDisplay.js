@@ -1,7 +1,9 @@
 import React from "react";
 import { Component } from "react";
 import { readStorage } from "../ContactServer/ContactServer";
+//Element display component will load any project examples when put into use
 /*
+<<<<<<< HEAD
   Liking and disling projects this was an intended feature for accounts of type investors 
   
   -- state --
@@ -15,6 +17,10 @@ import { readStorage } from "../ContactServer/ContactServer";
   OMITTED FEATURE ( to prevent feature creep ):
   
   this.state = {
+=======
+  OMITTED FEATURE (To prevent feature creep) :
+   
+>>>>>>> df634e3a044c05038a84190151fcc4712c12e44f
   //total: 0
   };
 
