@@ -142,7 +142,7 @@ class UploadProject extends Component {
                 </div>
               </div>
             </form>
-          </div>
+          </div>z
         </div>
       </div>
     );
