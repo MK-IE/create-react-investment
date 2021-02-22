@@ -1,6 +1,3 @@
-Link: https://create-react-investment.web.app/
-# CS385_REACT_PROJECT
-
 **Project description:**
 Platform to connect students with ideas up with investors and experts for social enterprise projects.
 
